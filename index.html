@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartStore</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#222;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:#111827;
+  color:white;
+  padding:15px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:bold;
+}
+
+nav{
+  display:flex;
+  gap:25px;
+  align-items:center;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* ================= POLICY MENU ================= */
+
+.policy-menu{
+  position:relative;
+  padding:5px 0;
+}
+
+.policy-button{
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  user-select:none;
+  white-space:nowrap;
+}
+
+.policy-dropdown{
+  display:none;
+  position:absolute;
+  right:0;
+  top:100%;
+  padding-top:8px;
+  min-width:220px;
+  z-index:2000;
+}
+
+.policy-dropdown-box{
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 8px 25px rgba(0,0,0,.22);
+}
+
+.policy-menu:hover .policy-dropdown{
+  display:block;
+}
+
+.policy-dropdown a{
+  display:block;
+  color:#222;
+  background:white;
+  padding:13px 16px;
+  text-decoration:none;
+  font-weight:normal;
+  border-bottom:1px solid #eee;
+}
+
+.policy-dropdown a:hover{
+  background:#f3f4f6;
+}
+
+.policy-dropdown a:last-child{
+  border-bottom:none;
+}
+
+/* ================= COD ================= */
+
+.cod-banner{
+  background:#16a34a;
+  color:white;
+  text-align:center;
+  padding:10px;
+  font-weight:bold;
+}
+
+/* ================= PAGE ================= */
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.container{
+  width:90%;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  padding:70px 20px;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  font-size:18px;
+  margin-bottom:25px;
+}
+
+/* ================= BUTTON ================= */
+
+.btn{
+  border:none;
+  background:#2563eb;
+  color:white;
+  padding:12px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.btn:hover{
+  background:#1d4ed8;
+}
+
+.btn-order{
+  background:#16a34a;
+}
+
+.btn-order:hover{
+  background:#15803d;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+  max-width:700px;
+  margin:35px auto;
+  position:relative;
+}
+
+.search-box input{
+  width:100%;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:16px;
+}
+
+.search-suggestions{
+  position:absolute;
+  top:55px;
+  left:0;
+  right:0;
+  background:white;
+  border-radius:8px;
+  box-shadow:0 5px 20px rgba(0,0,0,.15);
+  z-index:20;
+  overflow:hidden;
+}
+
+.suggestion{
+  padding:12px;
+  cursor:pointer;
+  border-bottom:1px solid #eee;
+}
+
+.suggestion:hover{
+  background:#f3f4f6;
+}
+
+/* ================= PRODUCTS ================= */
+
+.section-title{
+  text-align:center;
+  margin:40px 0 25px;
+  font-size:30px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:25px;
+  padding-bottom:40px;
+}
+
+.product-card{
+  background:white;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+.product-card:hover{
+  transform:translateY(-5px);
+}
+
+.product-card img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+}
+
+.product-info{
+  padding:18px;
+}
+
+.product-info h3{
+  margin-bottom:10px;
+}
+
+.price{
+  color:#16a34a;
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.product-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* ================= PRODUCT DETAIL ================= */
+
+.detail-card{
+  background:white;
+  margin:35px 0;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  align-items:center;
+}
+
+.detail-grid img{
+  width:100%;
+  max-height:450px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.detail-info h1{
+  font-size:35px;
+  margin-bottom:15px;
+}
+
+.detail-info p{
+  line-height:1.7;
+  color:#555;
+  margin-bottom:20px;
+}
+
+.related-section{
+  margin-top:45px;
+}
+
+.related-title{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:10px;
+}
+
+.related-subtitle{
+  text-align:center;
+  color:#6b7280;
+  margin-bottom:25px;
+}
+
+/* ================= ORDERS ================= */
+
+.order-search{
+  max-width:650px;
+  margin:40px auto;
+  display:flex;
+  gap:10px;
+}
+
+.order-search input{
+  flex:1;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:16px;
+}
+
+.order-result{
+  max-width:850px;
+  margin:20px auto 50px;
+}
+
+.tracking-card{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.tracking-card h2{
+  margin-bottom:20px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.info-box{
+  background:#f3f4f6;
+  padding:15px;
+  border-radius:10px;
+}
+
+.info-box small{
+  display:block;
+  color:#6b7280;
+  margin-bottom:5px;
+}
+
+.info-box b{
+  font-size:16px;
+}
+
+.status-badge{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:20px;
+  background:#dbeafe;
+  color:#1d4ed8;
+  font-weight:bold;
+}
+
+.timeline{
+  border-left:3px solid #2563eb;
+  padding-left:20px;
+}
+
+.timeline-item{
+  position:relative;
+  margin-bottom:25px;
+}
+
+.timeline-item:before{
+  content:"";
+  position:absolute;
+  left:-29px;
+  top:3px;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#d1d5db;
+}
+
+.timeline-item.active:before{
+  background:#2563eb;
+}
+
+.timeline-item.active strong{
+  color:#2563eb;
+}
+
+/* ================= CONTACT ================= */
+
+.contact-box{
+  background:white;
+  max-width:700px;
+  margin:50px auto;
+  padding:35px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.contact-box p{
+  margin:15px 0;
+}
+
+/* ================= POLICY ================= */
+
+.policy-card{
+  background:white;
+  max-width:950px;
+  margin:40px auto;
+  padding:35px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.policy-card h1{
+  margin-bottom:20px;
+  font-size:32px;
+}
+
+.policy-card h2{
+  margin-top:25px;
+  margin-bottom:10px;
+}
+
+.policy-card p{
+  line-height:1.8;
+  color:#555;
+  margin-bottom:12px;
+}
+
+.policy-card ul{
+  margin:10px 0 15px 25px;
+  line-height:1.8;
+  color:#555;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:2000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:550px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:30px;
+  border-radius:15px;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:18px;
+  top:10px;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.modal-box h2{
+  margin-bottom:20px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font-size:15px;
+}
+
+.form-group textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.form-group select{
+  background:white;
+}
+
+/* ================= SUCCESS ================= */
+
+.success-popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.success-box{
+  background:white;
+  max-width:450px;
+  width:100%;
+  padding:35px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.success-box h2{
+  color:#16a34a;
+  margin-bottom:15px;
+}
+
+.success-box p{
+  margin-bottom:20px;
+  line-height:1.6;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:#111827;
+  color:white;
+  text-align:center;
+  padding:25px;
+  margin-top:40px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+  header{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  nav{
+    gap:12px;
+    font-size:13px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .policy-dropdown{
+    right:auto;
+    left:50%;
+    transform:translateX(-50%);
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .detail-grid{
+    grid-template-columns:1fr;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .order-search{
+    flex-direction:column;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">🛍️ SmartStore</div>
+
+  <nav>
+
+    <a onclick="showPage('home')">Home</a>
+
+    <a onclick="showPage('products')">Products</a>
+
+    <a onclick="showPage('orders')">Orders</a>
+
+    <a onclick="showPage('contact')">Contact</a>
+
+    <div class="policy-menu">
+
+      <span class="policy-button">
+        Policies ▼
+      </span>
+
+      <div class="policy-dropdown">
+
+        <div class="policy-dropdown-box">
+
+          <a onclick="showPage('returnPolicy')">
+            Return Policy
+          </a>
+
+          <a onclick="showPage('refundPolicy')">
+            Refund Policy
+          </a>
+
+          <a onclick="showPage('privacyPolicy')">
+            Privacy Policy
+          </a>
+
+          <a onclick="showPage('termsPolicy')">
+            Terms & Conditions
+          </a>
+
+          <a onclick="showPage('shippingPolicy')">
+            Shipping Policy
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+</header>
+
+
+<div class="cod-banner">
+  💵 CASH ON DELIVERY AVAILABLE | 🔒 Secure Shopping
+</div>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="page active">
+
+  <div class="hero">
+
+    <h1>Welcome to SmartStore</h1>
+
+    <p>
+      Quality Products • Easy Ordering • Cash on Delivery
+    </p>
+
+    <button
+      class="btn"
+      onclick="showPage('products')"
+    >
+      🛍️ Shop Now
+    </button>
+
+  </div>
+
+
+  <div class="container">
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="productSearch"
+        placeholder="🔍 Search Product..."
+        oninput="searchProducts()"
+      >
+
+      <div
+        id="searchSuggestions"
+        class="search-suggestions"
+      ></div>
+
+    </div>
+
+
+    <h2 class="section-title">
+      🔥 Popular Products
+    </h2>
+
+
+    <div
+      id="homeProducts"
+      class="products"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section id="products" class="page">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      🛍️ All Products
+    </h2>
+
+    <div
+      id="productList"
+      class="products"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PRODUCT DETAIL ================= -->
+
+<section id="productDetailPage" class="page">
+
+  <div class="container">
+
+    <br>
+
+    <button
+      class="btn"
+      onclick="showPage('products')"
+    >
+      ← Back to Products
+    </button>
+
+    <div id="productDetail"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ORDERS ================= -->
+
+<section id="orders" class="page">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      📦 Track Your Order
+    </h2>
+
+    <p style="
+      text-align:center;
+      color:#6b7280;
+      margin-top:-10px;
+      margin-bottom:20px;
+    ">
+      Search using Order ID, Customer Name or Mobile Number
+    </p>
+
+    <div class="order-search">
+
+      <input
+        type="text"
+        id="orderSearch"
+        placeholder="Order ID / Name / Mobile"
+      >
+
+      <button
+        class="btn"
+        onclick="searchOrder()"
+      >
+        Track Order
+      </button>
+
+    </div>
+
+    <div
+      id="orderResult"
+      class="order-result"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="page">
+
+  <div class="container">
+
+    <div class="contact-box">
+
+      <h2>📞 Contact SmartStore</h2>
+
+      <p>
+        For any assistance, contact us on WhatsApp.
+      </p>
+
+      <button
+        class="btn"
+        onclick="window.open('https://wa.me/' + WHATSAPP_NUMBER,'_blank')"
+      >
+        💬 Contact on WhatsApp
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= RETURN POLICY ================= -->
+
+<section id="returnPolicy" class="page">
+
+  <div class="container">
+
+    <div class="policy-card">
+
+      <h1>Return Policy</h1>
+
+      <p>
+        We want you to be satisfied with your purchase.
+        If you wish to return an eligible product, please
+        contact SmartStore after receiving your order.
+      </p>
+
+      <h2>Return Charges</h2>
+
+      <p>
+        If the price of the returned product is above
+        ₹100, a return charge of ₹30 will be deducted
+        from the refundable amount.
+      </p>
+
+      <p>
+        The remaining eligible amount will be processed
+        as the refund.
+      </p>
+
+      <h2>Return Conditions</h2>
+
+      <ul>
+        <li>The product should be in acceptable condition.</li>
+        <li>The product should be returned with original accessories where applicable.</li>
+        <li>Return requests may be reviewed before approval.</li>
+      </ul>
+
+      <h2>How to Request a Return</h2>
+
+      <p>
+        Contact SmartStore with your Order ID and
+        relevant order details to request a return.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= REFUND POLICY ================= -->
+
+<section id="refundPolicy" class="page">
+
+  <div class="container">
+
+    <div class="policy-card">
+
+      <h1>Refund Policy</h1>
+
+      <p>
+        Once an eligible return is approved and the
+        returned product is received, the applicable
+        refund amount will be processed.
+      </p>
+
+      <h2>Refund Amount</h2>
+
+      <p>
+        For products priced above ₹100, a ₹30 return
+        charge will be deducted from the eligible
+        refund amount.
+      </p>
+
+      <p>
+        The remaining amount will be refunded according
+        to the applicable refund process.
+      </p>
+
+      <h2>Refund Processing</h2>
+
+      <p>
+        Refund processing time may depend on the payment
+        or refund method being used.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PRIVACY POLICY ================= -->
+
+<section id="privacyPolicy" class="page">
+
+  <div class="container">
+
+    <div class="policy-card">
+
+      <h1>Privacy Policy</h1>
+
+      <p>
+        SmartStore respects your privacy and aims to
+        handle customer information responsibly.
+      </p>
+
+      <h2>Information We Collect</h2>
+
+      <p>
+        When you place an order, information such as
+        your name, mobile number, address, state,
+        district and PIN Code may be collected for
+        order processing and delivery.
+      </p>
+
+      <h2>Use of Information</h2>
+
+      <p>
+        Your information may be used to process orders,
+        communicate regarding orders and arrange delivery.
+      </p>
+
+      <h2>Information Protection</h2>
+
+      <p>
+        We take reasonable steps to protect information
+        submitted through the website.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= TERMS ================= -->
+
+<section id="termsPolicy" class="page">
+
+  <div class="container">
+
+    <div class="policy-card">
+
+      <h1>Terms & Conditions</h1>
+
+      <p>
+        By using SmartStore and placing an order, you
+        agree to follow the applicable terms and
+        conditions of the website.
+      </p>
+
+      <h2>Orders</h2>
+
+      <p>
+        Customers are responsible for providing correct
+        name, mobile number, address, state, district
+        and PIN Code information.
+      </p>
+
+      <h2>Product Information</h2>
+
+      <p>
+        Product images, descriptions, prices and
+        availability may be updated from time to time.
+      </p>
+
+      <h2>Cash on Delivery</h2>
+
+      <p>
+        Cash on Delivery availability may depend on the
+        delivery location and order conditions.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= SHIPPING ================= -->
+
+<section id="shippingPolicy" class="page">
+
+  <div class="container">
+
+    <div class="policy-card">
+
+      <h1>Shipping Policy</h1>
+
+      <p>
+        SmartStore aims to process and dispatch orders
+        as soon as reasonably possible.
+      </p>
+
+      <h2>Delivery Address</h2>
+
+      <p>
+        Customers must provide a complete and accurate
+        delivery address, including state, district and
+        PIN Code.
+      </p>
+
+      <h2>Delivery Time</h2>
+
+      <p>
+        Delivery time may vary depending on the location,
+        courier service, weather, holidays and other
+        circumstances.
+      </p>
+
+      <h2>Delivery Issues</h2>
+
+      <p>
+        If there is an issue with delivery, customers
+        should contact SmartStore with their Order ID
+        and relevant information.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ORDER MODAL ================= -->
+
+<div
+  id="orderModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <span
+      class="close"
+      onclick="closeOrder()"
+    >
+      ×
+    </span>
+
+    <h2>
+      🛒 Place Your Order
+    </h2>
+
+    <form id="orderForm">
+
+      <input
+        type="hidden"
+        id="selectedProduct"
+      >
+
+      <input
+        type="hidden"
+        id="selectedPrice"
+      >
+
+
+      <div class="form-group">
+
+        <label>Your Name</label>
+
+        <input
+          type="text"
+          id="customerName"
+          placeholder="Enter your name"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Mobile Number</label>
+
+        <input
+          type="tel"
+          id="customerMobile"
+          placeholder="Enter 10-digit mobile number"
+          maxlength="10"
+          pattern="[0-9]{10}"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>State</label>
+
+        <input
+          type="text"
+          id="customerState"
+          placeholder="Enter your state"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>District</label>
+
+        <input
+          type="text"
+          id="customerDistrict"
+          placeholder="Enter your district"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Full Address</label>
+
+        <textarea
+          id="customerAddress"
+          placeholder="Enter your full address"
+          required
+        ></textarea>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>PIN Code</label>
+
+        <input
+          type="tel"
+          id="customerPin"
+          placeholder="Enter 6-digit PIN Code"
+          maxlength="6"
+          pattern="[0-9]{6}"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Product Size</label>
+
+        <select
+          id="productSize"
+          required
+        >
+
+          <option value="">
+            Select Size
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <button
+        class="btn"
+        type="submit"
+        style="width:100%;"
+      >
+        ✅ Submit Order
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- ================= SUCCESS ================= -->
+
+<div
+  id="successPopup"
+  class="success-popup"
+>
+
+  <div class="success-box">
+
+    <h2>
+      🎉 Order Placed!
+    </h2>
+
+    <p>
+      Your order has been successfully prepared.
+    </p>
+
+    <p>
+      <b>Order ID:</b>
+      <span id="generatedOrderId"></span>
+    </p>
+
+    <p>
+      WhatsApp will open shortly.
+      Press the <b>Send</b> button to send your order.
+    </p>
+
+    <button
+      class="btn"
+      onclick="closeSuccess()"
+    >
+      OK
+    </button>
+
+  </div>
+
+</div>
+
+
+<footer>
+  © 2026 SmartStore | All Rights Reserved
+</footer>
+
+
+<script>
+
+/* =====================================================
+   WHATSAPP NUMBER
+   CHANGE THIS NUMBER TO YOUR WHATSAPP NUMBER
+   ===================================================== */
+
+const WHATSAPP_NUMBER = "919211988613";
+
+
+/* =====================================================
+   PRODUCTS
+   ===================================================== */
+
+const products = [
+
+  {
+    id:1,
+    name:"Premium T-Shirt",
+    price:"₹799",
+    image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
+    description:"Premium cotton T-Shirt with comfortable fitting. Great for daily wear.",
+    sizes:["S","M","L","XL","XXL"]
+  },
+
+  {
+    id:2,
+    name:"Men's Jeans",
+    price:"₹1,299",
+    image:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=800",
+    description:"Comfortable denim jeans with stylish design, suitable for daily use.",
+    sizes:["28","30","32","34","36","38"]
+  },
+
+  {
+    id:3,
+    name:"Sports Shoes",
+    price:"₹1,799",
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+    description:"Comfortable sports shoes for daily use, walking and sports activities.",
+    sizes:["6","7","8","9","10"]
+  },
+
+  {
+    id:4,
+    name:"Premium Smart Watch",
+    price:"₹1,499",
+    image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+    description:"Premium smart watch with modern design.",
+    sizes:["One Size"]
+  },
+
+  {
+    id:5,
+    name:"Premium Backpack",
+    price:"₹1,199",
+    image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800",
+    description:"Stylish and durable backpack for school, college and travel.",
+    sizes:["One Size"]
+  },
+
+  {
+    id:6,
+    name:"Classic Sunglasses",
+    price:"₹699",
+    image:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800",
+    description:"Stylish classic sunglasses with modern look.",
+    sizes:["One Size"]
+  }
+
+];
+
+
+/* =====================================================
+   DEMO CUSTOMER ORDERS
+
+   IMPORTANT:
+   Later, when you receive a real order,
+   change the details of any demo order below.
+
+   Example:
+   customerName
+   mobile
+   product
+   size
+   quantity
+   price
+   status
+   currentLocation
+   lastUpdate
+   expectedDelivery
+   message
+   ===================================================== */
+
+const customerOrders = [
+
+  {
+    orderId:"SS1001",
+    customerName:"ankush sharma",
+    mobile:"9000000001",
+    product:"Premium T-Shirt",
+    size:"XL",
+    quantity:1,
+    price:"₹799",
+    status:"Order Received",
+    currentLocation:"SmartStore Order Center",
+    lastUpdate:"2 October 2026, 10:30 AM",
+    expectedDelivery:"5 October 2026",
+    message:"Your order has been received and is being processed."
+  },
+
+  {
+    orderId:"SS1002",
+    customerName:"Demo Customer 2",
+    mobile:"9000000002",
+    product:"Men's Jeans",
+    size:"32",
+    quantity:1,
+    price:"₹1,299",
+    status:"Packed",
+    currentLocation:"SmartStore Packing Center",
+    lastUpdate:"2 October 2026, 12:15 PM",
+    expectedDelivery:"5 October 2026",
+    message:"Your order has been packed and is ready for dispatch."
+  },
+
+  {
+    orderId:"SS1003",
+    customerName:"Demo Customer 3",
+    mobile:"9000000003",
+    product:"Sports Shoes",
+    size:"9",
+    quantity:1,
+    price:"₹1,799",
+    status:"Shipped",
+    currentLocation:"Ranchi Sorting Center",
+    lastUpdate:"2 October 2026, 2:40 PM",
+    expectedDelivery:"6 October 2026",
+    message:"Your order has been shipped and is on the way."
+  },
+
+  {
+    orderId:"SS1004",
+    customerName:"Demo Customer 4",
+    mobile:"9000000004",
+    product:"Premium Smart Watch",
+    size:"One Size",
+    quantity:1,
+    price:"₹1,499",
+    status:"Out for Delivery",
+    currentLocation:"Ranchi Delivery Hub",
+    lastUpdate:"2 October 2026, 9:30 AM",
+    expectedDelivery:"2 October 2026",
+    message:"Your order is out for delivery today."
+  },
+
+  {
+    orderId:"SS1005",
+    customerName:"Demo Customer 5",
+    mobile:"9000000005",
+    product:"Premium Backpack",
+    size:"One Size",
+    quantity:1,
+    price:"₹1,199",
+    status:"Delivered",
+    currentLocation:"Delivered to Customer",
+    lastUpdate:"1 October 2026, 4:20 PM",
+    expectedDelivery:"1 October 2026",
+    message:"Your order has been successfully delivered."
+  }
+
+];
+
+
+/* =====================================================
+   PAGE NAVIGATION
+   ===================================================== */
+
+function showPage(page){
+
+  document.querySelectorAll(".page").forEach(function(p){
+    p.classList.remove("active");
+  });
+
+  const target =
+    document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   PRODUCT CARD
+   ===================================================== */
+
+function createProductCard(product){
+
+  return `
+
+    <div class="product-card">
+
+      <img
+        src="${product.image}"
+        alt="${product.name}"
+      >
+
+      <div class="product-info">
+
+        <h3>
+          ${product.name}
+        </h3>
+
+        <div class="price">
+          ${product.price}
+        </div>
+
+        <div class="product-buttons">
+
+          <button
+            class="btn"
+            onclick="viewProduct(${product.id})"
+          >
+            View Product
+          </button>
+
+          <button
+            class="btn btn-order"
+            onclick="openOrderById(${product.id})"
+          >
+            🛒 Order Now
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   RENDER PRODUCTS
+   ===================================================== */
+
+function renderProducts(){
+
+  document.getElementById("productList").innerHTML =
+    products.map(createProductCard).join("");
+
+
+  document.getElementById("homeProducts").innerHTML =
+    products
+    .slice(0,4)
+    .map(createProductCard)
+    .join("");
+
+}
+
+
+/* =====================================================
+   VIEW PRODUCT
+   ===================================================== */
+
+function viewProduct(id){
+
+  const product =
+    products.find(function(p){
+      return p.id === Number(id);
+    });
+
+  if(!product) return;
+
+
+  const relatedProducts =
+    products
+    .filter(function(p){
+      return p.id !== product.id;
+    })
+    .slice(0,4);
+
+
+  document.getElementById("productDetail").innerHTML = `
+
+    <div class="detail-card">
+
+      <div class="detail-grid">
+
+        <div>
+
+          <img
+            src="${product.image}"
+            alt="${product.name}"
+          >
+
+        </div>
+
+        <div class="detail-info">
+
+          <h1>
+            ${product.name}
+          </h1>
+
+          <div class="price">
+            ${product.price}
+          </div>
+
+          <p>
+            ${product.description}
+          </p>
+
+          <button
+            class="btn btn-order"
+            onclick="openOrderById(${product.id})"
+          >
+            🛒 Order Now
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="related-section">
+
+        <h2 class="related-title">
+          🛍️ You May Also Like
+        </h2>
+
+        <p class="related-subtitle">
+          You may also like these products
+        </p>
+
+        <div class="products">
+
+          ${relatedProducts
+            .map(createProductCard)
+            .join("")}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  showPage("productDetailPage");
+
+}
+
+
+/* =====================================================
+   OPEN ORDER
+   ===================================================== */
+
+function openOrderById(id){
+
+  const product =
+    products.find(function(p){
+      return p.id === Number(id);
+    });
+
+  if(!product){
+
+    alert("Product could not be found.");
+
+    return;
+
+  }
+
+
+  document.getElementById("selectedProduct").value =
+    product.name;
+
+
+  document.getElementById("selectedPrice").value =
+    product.price;
+
+
+  const sizeSelect =
+    document.getElementById("productSize");
+
+
+  sizeSelect.innerHTML =
+    '<option value="">Select Size</option>';
+
+
+  let sizes =
+    product.sizes;
+
+
+  if(!Array.isArray(sizes) || sizes.length === 0){
+
+    sizes = ["One Size"];
+
+  }
+
+
+  sizes.forEach(function(size){
+
+    const option =
+      document.createElement("option");
+
+    option.value = size;
+
+    option.textContent = size;
+
+    sizeSelect.appendChild(option);
+
+  });
+
+
+  document.getElementById("orderModal")
+    .style.display = "flex";
+
+}
+
+
+/* =====================================================
+   COMPATIBILITY FUNCTION
+   ===================================================== */
+
+function openOrder(product,price){
+
+  const selectedProduct =
+    products.find(function(p){
+      return p.name === product;
+    });
+
+  if(!selectedProduct){
+
+    alert("Product could not be found.");
+
+    return;
+
+  }
+
+  openOrderById(selectedProduct.id);
+
+}
+
+
+/* =====================================================
+   CLOSE ORDER
+   ===================================================== */
+
+function closeOrder(){
+
+  document.getElementById("orderModal")
+    .style.display = "none";
+
+}
+
+
+/* =====================================================
+   ORDER ID
+   ===================================================== */
+
+function generateOrderId(){
+
+  return "SS" +
+    Math.floor(
+      1000 + Math.random() * 9000
+    );
+
+}
+
+
+/* =====================================================
+   ORDER SUBMIT
+   ===================================================== */
+
+document
+.getElementById("orderForm")
+.addEventListener("submit",function(e){
+
+  e.preventDefault();
+
+
+  const orderId =
+    generateOrderId();
+
+
+  const product =
+    document.getElementById("selectedProduct")
+    .value;
+
+
+  const price =
+    document.getElementById("selectedPrice")
+    .value;
+
+
+  const name =
+    document.getElementById("customerName")
+    .value.trim();
+
+
+  const mobile =
+    document.getElementById("customerMobile")
+    .value.trim();
+
+
+  const state =
+    document.getElementById("customerState")
+    .value.trim();
+
+
+  const district =
+    document.getElementById("customerDistrict")
+    .value.trim();
+
+
+  const address =
+    document.getElementById("customerAddress")
+    .value.trim();
+
+
+  const pin =
+    document.getElementById("customerPin")
+    .value.trim();
+
+
+  const size =
+    document.getElementById("productSize")
+    .value;
+
+
+  if(!/^[0-9]{10}$/.test(mobile)){
+
+    alert(
+      "Please enter a valid 10-digit mobile number."
+    );
+
+    return;
+
+  }
+
+
+  if(!/^[0-9]{6}$/.test(pin)){
+
+    alert(
+      "Please enter a valid 6-digit PIN Code."
+    );
+
+    return;
+
+  }
+
+
+  if(!size){
+
+    alert(
+      "Please select the Product Size."
+    );
+
+    return;
+
+  }
+
+
+  const message =
+
+`🛍️ NEW SMARTSTORE ORDER
+
+Order ID: ${orderId}
+
+Customer Name: ${name}
+
+Mobile Number: ${mobile}
+
+State: ${state}
+
+District: ${district}
+
+Full Address: ${address}
+
+PIN Code: ${pin}
+
+Product: ${product}
+
+Price: ${price}
+
+Product Size: ${size}
+
+Payment: Cash on Delivery`;
+
+
+  const whatsappURL =
+    "https://wa.me/" +
+    9211988613 +
+    "?text=" +
+    encodeURIComponent(message);
+
+
+  closeOrder();
+
+
+  document.getElementById("generatedOrderId")
+    .textContent = orderId;
+
+
+  document.getElementById("successPopup")
+    .style.display = "flex";
+
+
+  setTimeout(function(){
+
+    window.open(
+      whatsappURL,
+      "_blank"
+    );
+
+  },700);
+
+});
+
+
+/* =====================================================
+   CLOSE SUCCESS
+   ===================================================== */
+
+function closeSuccess(){
+
+  document.getElementById("successPopup")
+    .style.display = "none";
+
+}
+
+
+/* =====================================================
+   SEARCH PRODUCTS
+   ===================================================== */
+
+function searchProducts(){
+
+  const query =
+    document.getElementById("productSearch")
+    .value
+    .toLowerCase()
+    .trim();
+
+
+  const box =
+    document.getElementById("searchSuggestions");
+
+
+  if(!query){
+
+    box.innerHTML = "";
+
+    return;
+
+  }
+
+
+  const results =
+    products.filter(function(product){
+
+      return product.name
+        .toLowerCase()
+        .includes(query);
+
+    });
+
+
+  if(results.length === 0){
+
+    box.innerHTML = `
+
+      <div class="suggestion">
+        ❌ Product not found
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    results.map(function(product){
+
+      return `
+
+        <div
+          class="suggestion"
+          onclick="selectSearchProduct(${product.id})"
+        >
+
+          ${product.name}
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   SEARCH PRODUCT SELECT
+   ===================================================== */
+
+function selectSearchProduct(id){
+
+  document.getElementById("productSearch")
+    .value = "";
+
+  document.getElementById("searchSuggestions")
+    .innerHTML = "";
+
+  viewProduct(id);
+
+}
+
+
+/* =====================================================
+   ORDER SEARCH
+   ===================================================== */
+
+function searchOrder(){
+
+  const query =
+    document.getElementById("orderSearch")
+    .value
+    .toLowerCase()
+    .trim();
+
+
+  const result =
+    document.getElementById("orderResult");
+
+
+  if(!query){
+
+    result.innerHTML = `
+
+      <div class="tracking-card">
+
+        <p>
+          Please enter Order ID, Name or Mobile Number.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const order =
+    customerOrders.find(function(item){
+
+      return (
+
+        item.orderId
+          .toLowerCase()
+          .includes(query)
+
+        ||
+
+        item.customerName
+          .toLowerCase()
+          .includes(query)
+
+        ||
+
+        item.mobile
+          .includes(query)
+
+      );
+
+    });
+
+
+  if(!order){
+
+    result.innerHTML = `
+
+      <div class="tracking-card">
+
+        <h2>
+          ❌ Order Not Found
+        </h2>
+
+        <p>
+          Please enter the correct Order ID,
+          Name or Mobile Number.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  showOrderTracking(order);
+
+}
+
+
+/* =====================================================
+   ORDER TRACKING
+   ===================================================== */
+
+function showOrderTracking(order){
+
+  const result =
+    document.getElementById("orderResult");
+
+
+  const statuses = [
+
+    "Order Received",
+    "Packed",
+    "Shipped",
+    "Out for Delivery",
+    "Delivered"
+
+  ];
+
+
+  const currentIndex =
+    statuses.indexOf(order.status);
+
+
+  const timeline =
+    statuses.map(function(status,index){
+
+      const active =
+        index <= currentIndex
+          ? "active"
+          : "";
+
+
+      return `
+
+        <div class="timeline-item ${active}">
+
+          <strong>
+            ${status}
+          </strong>
+
+          ${
+            index === currentIndex
+            ? "<p>Current Status</p>"
+            : ""
+          }
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  result.innerHTML = `
+
+    <div class="tracking-card">
+
+      <h2>
+        📦 Order ${order.orderId}
+      </h2>
+
+
+      <div style="margin-bottom:20px;">
+
+        <span class="status-badge">
+          ${order.status}
+        </span>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-box">
+          <small>Customer</small>
+          <b>${order.customerName}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Mobile</small>
+          <b>${order.mobile}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Product</small>
+          <b>${order.product}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Size</small>
+          <b>${order.size}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Quantity</small>
+          <b>${order.quantity}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Price</small>
+          <b>${order.price}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Current Location</small>
+          <b>${order.currentLocation}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Expected Delivery</small>
+          <b>${order.expectedDelivery}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Last Update</small>
+          <b>${order.lastUpdate}</b>
+        </div>
+
+        <div class="info-box">
+          <small>Status</small>
+          <b>${order.status}</b>
+        </div>
+
+      </div>
+
+
+      <h3 style="margin-bottom:20px;">
+        🚚 Tracking Timeline
+      </h3>
+
+
+      <div class="timeline">
+
+        ${timeline}
+
+      </div>
+
+
+      <div
+        style="
+          margin-top:25px;
+          padding:15px;
+          background:#ecfdf5;
+          border-radius:10px;
+        "
+      >
+
+        <b>📢 Latest Update:</b>
+
+        <p style="margin-top:8px;">
+          ${order.message}
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   START WEBSITE
+   ===================================================== */
+
+renderProducts();
+
+</script>
+
+</body>
+</html>
