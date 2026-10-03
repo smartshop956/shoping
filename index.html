@@ -1,0 +1,3696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Deals - Online Shopping</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f7fb;
+  color:#1f2937;
+}
+
+button,
+input,
+select,
+textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+header{
+  background:#0d6efd;
+  color:white;
+  padding:14px 20px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-left:auto;
+}
+
+.nav button{
+  border:0;
+  background:transparent;
+  color:white;
+  padding:10px 13px;
+  border-radius:7px;
+  font-size:14px;
+}
+
+.nav button:hover{
+  background:rgba(255,255,255,.16);
+}
+
+.policy-menu{
+  position:relative;
+}
+
+.policy-dropdown{
+  display:none;
+  position:absolute;
+  top:46px;
+  right:0;
+  width:210px;
+  background:white;
+  border-radius:10px;
+  box-shadow:0 8px 30px rgba(0,0,0,.18);
+  overflow:hidden;
+  z-index:1500;
+}
+
+.policy-dropdown.show{
+  display:block;
+}
+
+.policy-dropdown button{
+  width:100%;
+  color:#1f2937;
+  background:white;
+  text-align:left;
+  border-radius:0;
+  padding:12px 15px;
+}
+
+.policy-dropdown button:hover{
+  background:#f1f5f9;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:25px 18px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HOME */
+
+.hero{
+  background:linear-gradient(135deg,#0d6efd,#4f8dfd);
+  color:white;
+  border-radius:18px;
+  padding:35px;
+  margin-bottom:25px;
+}
+
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  opacity:.95;
+  margin-bottom:20px;
+}
+
+.search-box{
+  display:flex;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  max-width:700px;
+}
+
+.search-box input{
+  flex:1;
+  padding:14px;
+  border:0;
+  outline:none;
+  color:#222;
+}
+
+.search-box button{
+  background:#111827;
+  color:white;
+  border:0;
+  padding:0 22px;
+}
+
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:5px 0 20px;
+}
+
+.categories button{
+  border:1px solid #dbe3ef;
+  background:white;
+  padding:10px 18px;
+  border-radius:30px;
+  white-space:nowrap;
+}
+
+.categories button:hover,
+.categories button.active{
+  background:#0d6efd;
+  color:white;
+  border-color:#0d6efd;
+}
+
+.section-title{
+  font-size:24px;
+  margin:15px 0;
+}
+
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.product-card{
+  background:white;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 14px rgba(0,0,0,.08);
+  transition:.2s;
+}
+
+.product-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
+}
+
+.product-card img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  background:#f1f5f9;
+}
+
+.product-info{
+  padding:15px;
+}
+
+.product-info h3{
+  font-size:16px;
+  margin-bottom:8px;
+}
+
+.price{
+  font-weight:bold;
+  font-size:18px;
+  color:#0d6efd;
+}
+
+.product-info small{
+  display:block;
+  color:#64748b;
+  margin-top:5px;
+}
+
+.product-actions{
+  display:flex;
+  gap:8px;
+  margin-top:13px;
+}
+
+.product-actions button{
+  flex:1;
+  padding:10px;
+  border-radius:7px;
+  border:0;
+}
+
+.view-btn{
+  background:#eef4ff;
+  color:#0d6efd;
+}
+
+.buy-btn{
+  background:#0d6efd;
+  color:white;
+}
+
+/* PRODUCT */
+
+.back-btn{
+  border:0;
+  background:#e8eef8;
+  padding:10px 16px;
+  border-radius:8px;
+  margin-bottom:20px;
+}
+
+.product-detail{
+  background:white;
+  border-radius:16px;
+  padding:25px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+.product-detail img{
+  width:100%;
+  max-height:500px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#f8fafc;
+}
+
+.product-detail-info h1{
+  font-size:30px;
+  margin-bottom:15px;
+}
+
+.detail-price{
+  font-size:27px;
+  color:#0d6efd;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.product-detail-info p{
+  color:#64748b;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+.size-select{
+  padding:11px;
+  border:1px solid #d1d5db;
+  border-radius:7px;
+  width:100%;
+  margin:10px 0 15px;
+}
+
+.detail-buy{
+  width:100%;
+  border:0;
+  background:#0d6efd;
+  color:white;
+  padding:14px;
+  border-radius:8px;
+  font-size:16px;
+}
+
+.you-may-like{
+  margin-top:30px;
+}
+
+.you-may-like .products-grid{
+  grid-template-columns:repeat(5,1fr);
+}
+
+.you-may-like .product-card img{
+  height:160px;
+}
+
+/* ORDERS */
+
+.orders-header{
+  margin-bottom:20px;
+}
+
+.orders-header h1{
+  margin-bottom:7px;
+}
+
+.orders-header p{
+  color:#64748b;
+}
+
+.track-panel{
+  background:white;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 4px 18px rgba(0,0,0,.07);
+  margin-bottom:20px;
+}
+
+.track-panel h2{
+  margin-bottom:7px;
+}
+
+.track-panel p{
+  color:#64748b;
+  margin-bottom:16px;
+}
+
+.track-input-row{
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:10px;
+}
+
+.track-input-row input{
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  outline:none;
+}
+
+.track-input-row input:focus{
+  border-color:#0d6efd;
+}
+
+.track-input-row button{
+  border:0;
+  background:#0d6efd;
+  color:white;
+  padding:0 25px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.track-error{
+  color:#dc2626 !important;
+  margin-top:12px;
+  margin-bottom:0 !important;
+  display:none;
+}
+
+.orders-empty{
+  background:white;
+  border-radius:16px;
+  padding:45px 20px;
+  text-align:center;
+  color:#64748b;
+}
+
+/* TRACKED ORDER */
+
+.tracked-order{
+  background:white;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 4px 18px rgba(0,0,0,.07);
+}
+
+.order-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding-bottom:18px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.order-top h2{
+  margin-bottom:5px;
+}
+
+.order-top small{
+  color:#64748b;
+}
+
+.status-badge{
+  padding:8px 13px;
+  border-radius:30px;
+  background:#e8f1ff;
+  color:#0d6efd;
+  font-size:13px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.status-badge.delivered{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.status-badge.cancelled{
+  background:#fee2e2;
+  color:#dc2626;
+}
+
+.order-info-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:20px 0;
+}
+
+.info-box{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:14px;
+}
+
+.info-box span{
+  display:block;
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:5px;
+}
+
+.info-box strong{
+  font-size:14px;
+}
+
+.location-box{
+  background:#eef6ff;
+  border:1px solid #d8e9ff;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:20px;
+}
+
+.location-box .location-row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.location-item{
+  flex:1;
+}
+
+.location-item span{
+  display:block;
+  color:#64748b;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+.location-item strong{
+  color:#0f172a;
+}
+
+.order-product{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  padding:18px 0;
+  border-top:1px solid #e5e7eb;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.order-product img{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:10px;
+  background:#f1f5f9;
+}
+
+.order-product-info{
+  flex:1;
+}
+
+.order-product-info h3{
+  margin-bottom:7px;
+}
+
+.order-product-info p{
+  color:#64748b;
+  font-size:14px;
+  margin-top:4px;
+}
+
+.order-product-price{
+  font-weight:bold;
+  font-size:18px;
+}
+
+/* TIMELINE */
+
+.timeline{
+  margin-top:25px;
+}
+
+.timeline h3{
+  margin-bottom:18px;
+}
+
+.timeline-list{
+  display:flex;
+  justify-content:space-between;
+  position:relative;
+  gap:10px;
+}
+
+.timeline-list:before{
+  content:"";
+  position:absolute;
+  top:18px;
+  left:7%;
+  right:7%;
+  height:3px;
+  background:#e5e7eb;
+  z-index:0;
+}
+
+.timeline-item{
+  flex:1;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+
+.timeline-dot{
+  width:36px;
+  height:36px;
+  margin:auto;
+  border-radius:50%;
+  background:#e5e7eb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#64748b;
+  font-weight:bold;
+  border:4px solid white;
+}
+
+.timeline-item.done .timeline-dot{
+  background:#0d6efd;
+  color:white;
+}
+
+.timeline-item.current .timeline-dot{
+  box-shadow:0 0 0 4px rgba(13,110,253,.15);
+}
+
+.timeline-item span{
+  display:block;
+  margin-top:8px;
+  font-size:12px;
+  color:#64748b;
+}
+
+.timeline-item.done span{
+  color:#0d6efd;
+  font-weight:bold;
+}
+
+.cancelled-note{
+  margin-top:18px;
+  background:#fff1f2;
+  color:#be123c;
+  padding:13px;
+  border-radius:9px;
+}
+
+.order-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+  flex-wrap:wrap;
+}
+
+.order-buttons button{
+  border:0;
+  padding:11px 16px;
+  border-radius:8px;
+}
+
+.cancel-order-btn{
+  background:#fee2e2;
+  color:#dc2626;
+}
+
+.receipt-btn{
+  background:#111827;
+  color:white;
+}
+
+.return-btn{
+  background:#fff7ed;
+  color:#c2410c;
+}
+
+.clear-track-btn{
+  background:#e5e7eb;
+  color:#374151;
+}
+
+/* CONTACT */
+
+.contact-card{
+  background:white;
+  max-width:800px;
+  margin:auto;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 4px 18px rgba(0,0,0,.07);
+}
+
+.contact-card h1{
+  margin-bottom:10px;
+}
+
+.contact-card p{
+  color:#64748b;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.contact-item{
+  background:#f8fafc;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:12px;
+}
+
+.whatsapp-btn{
+  display:inline-block;
+  background:#16a34a;
+  color:white;
+  border:0;
+  padding:13px 20px;
+  border-radius:8px;
+  margin-top:10px;
+}
+
+/* MODALS */
+
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.55);
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal-overlay.show{
+  display:flex;
+}
+
+.modal{
+  background:white;
+  width:100%;
+  max-width:500px;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:16px;
+  padding:25px;
+  position:relative;
+}
+
+.modal h2{
+  margin-bottom:16px;
+}
+
+.close-modal{
+  position:absolute;
+  right:15px;
+  top:12px;
+  border:0;
+  background:transparent;
+  font-size:25px;
+  color:#64748b;
+}
+
+.modal input,
+.modal select,
+.modal textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  margin-bottom:12px;
+  outline:none;
+}
+
+.modal textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.modal label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.modal-main-btn{
+  width:100%;
+  border:0;
+  background:#0d6efd;
+  color:white;
+  padding:13px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+.modal-danger-btn{
+  width:100%;
+  border:0;
+  background:#dc2626;
+  color:white;
+  padding:13px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+/* ORDER MODAL */
+
+.order-summary{
+  background:#f8fafc;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.order-summary img{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:8px;
+  float:left;
+  margin-right:12px;
+}
+
+.order-summary:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+
+/* SUCCESS */
+
+.success-box{
+  text-align:center;
+  padding:15px;
+}
+
+.success-icon{
+  width:65px;
+  height:65px;
+  background:#dcfce7;
+  color:#16a34a;
+  border-radius:50%;
+  margin:0 auto 15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:40px;
+  background:#111827;
+  color:white;
+  padding:35px 20px;
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:30px;
+}
+
+footer h3{
+  margin-bottom:12px;
+}
+
+footer p,
+footer button{
+  color:#cbd5e1;
+}
+
+footer button{
+  display:block;
+  background:none;
+  border:0;
+  padding:5px 0;
+  text-align:left;
+}
+
+footer button:hover{
+  color:white;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+  .products-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .you-may-like .products-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .order-info-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  header{
+    position:relative;
+  }
+
+  .header-inner{
+    flex-wrap:wrap;
+  }
+
+  .nav{
+    width:100%;
+    margin-left:0;
+    overflow-x:auto;
+  }
+
+  .nav button{
+    white-space:nowrap;
+  }
+
+  .products-grid,
+  .you-may-like .products-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .product-card img{
+    height:180px;
+  }
+
+  .hero{
+    padding:25px 20px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .product-detail{
+    grid-template-columns:1fr;
+  }
+
+  .track-input-row{
+    grid-template-columns:1fr;
+  }
+
+  .track-input-row button{
+    padding:13px;
+  }
+
+  .order-top{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .location-box .location-row{
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .timeline-list{
+    flex-direction:column;
+    gap:15px;
+  }
+
+  .timeline-list:before{
+    top:18px;
+    bottom:18px;
+    left:17px;
+    right:auto;
+    width:3px;
+    height:auto;
+  }
+
+  .timeline-item{
+    display:flex;
+    align-items:center;
+    text-align:left;
+    gap:12px;
+  }
+
+  .timeline-dot{
+    margin:0;
+    flex:none;
+  }
+
+  .timeline-item span{
+    margin:0;
+  }
+
+  .footer-inner{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:450px){
+  .products-grid,
+  .you-may-like .products-grid{
+    grid-template-columns:1fr;
+  }
+
+  .order-info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .order-product{
+    align-items:flex-start;
+  }
+
+  .order-product{
+    flex-wrap:wrap;
+  }
+
+  .order-product-price{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <div class="logo">Smart Deals</div>
+
+    <div class="nav">
+
+      <button onclick="showHome()">Home</button>
+
+      <button onclick="showOrders()">My Orders</button>
+
+      <button onclick="showContact()">Contact</button>
+
+      <div class="policy-menu">
+        <button onclick="togglePolicyMenu(event)">
+          Policies ▾
+        </button>
+
+        <div class="policy-dropdown" id="policyDropdown">
+
+          <button onclick="openPolicy('Return Policy')">
+            Return Policy
+          </button>
+
+          <button onclick="openPolicy('Refund Policy')">
+            Refund Policy
+          </button>
+
+          <button onclick="openPolicy('Exchange Policy')">
+            Exchange Policy
+          </button>
+
+          <button onclick="openPolicy('Cancellation Policy')">
+            Cancellation Policy
+          </button>
+
+          <button onclick="openPolicy('Shipping Policy')">
+            Shipping Policy
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- HOME PAGE -->
+  <section id="homePage" class="page active">
+
+    <div class="hero">
+
+      <h1>Welcome to Smart Deals</h1>
+
+      <p>
+        Shop amazing products at great prices.
+      </p>
+
+      <div class="search-box">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search products..."
+          oninput="searchProducts()"
+        >
+
+        <button onclick="searchProducts()">
+          Search
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="categories">
+
+      <button class="active" onclick="filterCategory('All',this)">
+        All
+      </button>
+
+      <button onclick="filterCategory('Fashion',this)">
+        Fashion
+      </button>
+
+      <button onclick="filterCategory('Beauty',this)">
+        Beauty
+      </button>
+
+      <button onclick="filterCategory('Accessories',this)">
+        Accessories
+      </button>
+
+      <button onclick="filterCategory('Electronics',this)">
+        Electronics
+      </button>
+
+    </div>
+
+    <h2 class="section-title">Products</h2>
+
+    <div id="productsGrid" class="products-grid"></div>
+
+  </section>
+
+
+  <!-- PRODUCT PAGE -->
+  <section id="productPage" class="page">
+
+    <button class="back-btn" onclick="showHome()">
+      ← Back to Home
+    </button>
+
+    <div id="productDetail"></div>
+
+  </section>
+
+
+  <!-- ORDERS PAGE -->
+  <section id="ordersPage" class="page">
+
+    <div class="orders-header">
+
+      <h1>My Orders</h1>
+
+      <p>
+        Enter your Order ID and registered mobile number to track your order.
+      </p>
+
+    </div>
+
+
+    <div class="track-panel">
+
+      <h2>Track Your Order</h2>
+
+      <p>
+        Use the Order ID / Tracking ID and mobile number used while placing the order.
+      </p>
+
+      <div class="track-input-row">
+
+        <input
+          type="text"
+          id="ordersTrackId"
+          placeholder="Order ID / Tracking ID"
+        >
+
+        <input
+          type="tel"
+          id="ordersTrackMobile"
+          placeholder="Registered Mobile Number"
+          maxlength="10"
+        >
+
+        <button onclick="trackOrderFromOrdersPage()">
+          Track Order
+        </button>
+
+      </div>
+
+      <p id="ordersTrackError" class="track-error"></p>
+
+    </div>
+
+
+    <div id="trackedOrderResult">
+
+      <div class="orders-empty">
+        <h3>No order selected</h3>
+
+        <p>
+          Enter your Order ID and mobile number above to view your order details.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONTACT PAGE -->
+  <section id="contactPage" class="page">
+
+    <div class="contact-card">
+
+      <h1>Contact Us</h1>
+
+      <p>
+        Need help with your order, delivery, return, refund or any other issue?
+        Contact Smart Deals support.
+      </p>
+
+      <div class="contact-item">
+        <strong>Customer Support</strong>
+        <p>
+          Our support team can help you with orders and product-related queries.
+        </p>
+      </div>
+
+      <div class="contact-item">
+        <strong>WhatsApp Support</strong>
+        <p>
+          Chat with Smart Deals support directly on WhatsApp.
+        </p>
+
+        <button class="whatsapp-btn" onclick="openWhatsApp()">
+          Chat on WhatsApp
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  <div class="footer-inner">
+
+    <div>
+      <h3>Smart Deals</h3>
+
+      <p>
+        Your simple and smart online shopping destination.
+      </p>
+    </div>
+
+    <div>
+
+      <h3>Quick Links</h3>
+
+      <button onclick="showHome()">Home</button>
+
+      <button onclick="showOrders()">My Orders</button>
+
+      <button onclick="showContact()">Contact</button>
+
+    </div>
+
+    <div>
+
+      <h3>Policies</h3>
+
+      <button onclick="openPolicy('Return Policy')">
+        Return Policy
+      </button>
+
+      <button onclick="openPolicy('Refund Policy')">
+        Refund Policy
+      </button>
+
+      <button onclick="openPolicy('Exchange Policy')">
+        Exchange Policy
+      </button>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- ORDER MODAL -->
+
+<div id="orderModal" class="modal-overlay">
+
+  <div class="modal">
+
+    <button class="close-modal" onclick="closeModal('orderModal')">
+      ×
+    </button>
+
+    <h2>Place Your Order</h2>
+
+    <div id="orderSummary" class="order-summary"></div>
+
+    <label>Customer Name</label>
+
+    <input
+      id="customerName"
+      type="text"
+      placeholder="Enter your name"
+    >
+
+    <label>Mobile Number</label>
+
+    <input
+      id="customerPhone"
+      type="tel"
+      maxlength="10"
+      placeholder="Enter 10 digit mobile number"
+    >
+
+    <label>Delivery Address</label>
+
+    <textarea
+      id="customerAddress"
+      placeholder="Enter complete delivery address"
+    ></textarea>
+
+    <label>Size</label>
+
+    <select id="customerSize">
+    </select>
+
+    <button class="modal-main-btn" onclick="placeOrder()">
+      Place Order
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- SUCCESS MODAL -->
+
+<div id="successModal" class="modal-overlay">
+
+  <div class="modal">
+
+    <button class="close-modal" onclick="closeModal('successModal')">
+      ×
+    </button>
+
+    <div class="success-box">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2>Order Placed Successfully</h2>
+
+      <p id="successMessage" style="margin:12px 0 20px;color:#64748b;"></p>
+
+      <button class="modal-main-btn" onclick="goToTrackedOrder()">
+        Track Order
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- CANCEL MODAL -->
+
+<div id="cancelModal" class="modal-overlay">
+
+  <div class="modal">
+
+    <button class="close-modal" onclick="closeModal('cancelModal')">
+      ×
+    </button>
+
+    <h2>Cancel Order</h2>
+
+    <p style="color:#64748b;margin-bottom:15px;">
+      Please select a reason for cancelling this order.
+    </p>
+
+    <label>Cancellation Reason</label>
+
+    <select id="cancelReason">
+
+      <option value="">
+        Select a reason
+      </option>
+
+      <option value="Changed my mind">
+        Changed my mind
+      </option>
+
+      <option value="Ordered by mistake">
+        Ordered by mistake
+      </option>
+
+      <option value="Found another product">
+        Found another product
+      </option>
+
+      <option value="Delivery taking too long">
+        Delivery taking too long
+      </option>
+
+      <option value="Product no longer required">
+        Product no longer required
+      </option>
+
+      <option value="Other">
+        Other
+      </option>
+
+    </select>
+
+    <label>Additional Details (Optional)</label>
+
+    <textarea
+      id="cancelDetails"
+      placeholder="Tell us more..."
+    ></textarea>
+
+    <button
+      class="modal-danger-btn"
+      onclick="confirmCancelOrder()"
+    >
+      Confirm Cancellation
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- POLICY MODAL -->
+
+<div id="policyModal" class="modal-overlay">
+
+  <div class="modal">
+
+    <button class="close-modal" onclick="closeModal('policyModal')">
+      ×
+    </button>
+
+    <h2 id="policyTitle"></h2>
+
+    <div id="policyContent"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+const products = [
+
+  {
+    id:"p1",
+    name:"Premium Cotton T-Shirt",
+    category:"Fashion",
+    price:799,
+    image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80",
+    description:"Comfortable premium cotton t-shirt suitable for everyday wear.",
+    sizes:["S","M","L","XL"]
+  },
+
+  {
+    id:"p2",
+    name:"Classic Denim Jeans",
+    category:"Fashion",
+    price:1299,
+    image:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=700&q=80",
+    description:"Classic denim jeans with a comfortable everyday fit.",
+    sizes:["28","30","32","34","36"]
+  },
+
+  {
+    id:"p3",
+    name:"Beauty Makeup Kit",
+    category:"Beauty",
+    price:1599,
+    image:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=80",
+    description:"A useful beauty makeup kit for your everyday styling needs.",
+    sizes:["One Size"]
+  },
+
+  {
+    id:"p4",
+    name:"Smart Watch",
+    category:"Electronics",
+    price:2499,
+    image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80",
+    description:"Smart watch with a modern design for everyday use.",
+    sizes:["One Size"]
+  },
+
+  {
+    id:"p5",
+    name:"Fashion Handbag",
+    category:"Accessories",
+    price:999,
+    image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=80",
+    description:"Stylish handbag suitable for everyday fashion.",
+    sizes:["One Size"]
+  },
+
+  {
+    id:"p6",
+    name:"Wireless Earbuds",
+    category:"Electronics",
+    price:1499,
+    image:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=700&q=80",
+    description:"Wireless earbuds with a compact and modern design.",
+    sizes:["One Size"]
+  }
+
+];
+
+
+/* =========================================================
+   DEMO ORDERS
+   Edit these orders whenever you want.
+========================================================= */
+
+const demoOrders = [
+
+  {
+    id:"SS1001",
+    name:"Rahul",
+    phone:"9876543210",
+    product:"p1",
+    size:"L",
+    price:799,
+    status:"Order Confirmed",
+    location:"Patna Warehouse",
+    expectedDelivery:"05 Oct 2026",
+    address:"Patna",
+    date:"02 Oct 2026"
+  },
+
+  {
+    id:"SS1002",
+    name:"Aman",
+    phone:"9876543211",
+    product:"p2",
+    size:"32",
+    price:1299,
+    status:"Shipped",
+    location:"Patna Hub",
+    expectedDelivery:"05 Oct 2026",
+    address:"Patna",
+    date:"02 Oct 2026"
+  },
+
+  {
+    id:"SS1003",
+    name:"Priya",
+    phone:"9876543212",
+    product:"p3",
+    size:"One Size",
+    price:1599,
+    status:"Out for Delivery",
+    location:"Patna Delivery Center",
+    expectedDelivery:"03 Oct 2026",
+    address:"Patna",
+    date:"01 Oct 2026"
+  },
+
+  {
+    id:"SS1004",
+    name:"Neha",
+    phone:"9876543213",
+    product:"p4",
+    size:"One Size",
+    price:2499,
+    status:"Delivered",
+    location:"Delivered to Customer",
+    expectedDelivery:"30 Sep 2026",
+    address:"Patna",
+    date:"30 Sep 2026"
+  },
+
+  {
+    id:"SS1005",
+    name:"Ravi",
+    phone:"9876543214",
+    product:"p5",
+    size:"One Size",
+    price:999,
+    status:"Order Placed",
+    location:"Order Processing Center",
+    expectedDelivery:"07 Oct 2026",
+    address:"Patna",
+    date:"03 Oct 2026"
+  }
+
+];
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let currentProduct = null;
+let currentCategory = "All";
+let currentTrackingOrderId = null;
+let pendingCancelOrderId = null;
+
+
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function normalizePhone(phone){
+
+  return String(phone || "").replace(/\D/g,"");
+
+}
+
+
+function closeAllModals(){
+
+  document
+    .querySelectorAll(".modal-overlay")
+    .forEach(modal => modal.classList.remove("show"));
+
+}
+
+
+function closeModal(id){
+
+  const modal = document.getElementById(id);
+
+  if(modal){
+    modal.classList.remove("show");
+  }
+
+}
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function hideAllPages(){
+
+  [
+    "homePage",
+    "productPage",
+    "ordersPage",
+    "contactPage"
+  ].forEach(id => {
+
+    const page = document.getElementById(id);
+
+    if(page){
+      page.classList.remove("active");
+    }
+
+  });
+
+}
+
+
+function showHome(){
+
+  hideAllPages();
+
+  document.getElementById("homePage").classList.add("active");
+
+  closeAllModals();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showOrders(){
+
+  hideAllPages();
+
+  document.getElementById("ordersPage").classList.add("active");
+
+  closeAllModals();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showContact(){
+
+  hideAllPages();
+
+  document.getElementById("contactPage").classList.add("active");
+
+  closeAllModals();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   POLICY MENU
+========================================================= */
+
+function togglePolicyMenu(event){
+
+  event.stopPropagation();
+
+  const dropdown =
+    document.getElementById("policyDropdown");
+
+  dropdown.classList.toggle("show");
+
+}
+
+
+/*
+  IMPORTANT:
+  Policy dropdown is NOT automatically closed
+  when another policy is opened.
+*/
+
+function openPolicy(policy){
+
+  const title =
+    document.getElementById("policyTitle");
+
+  const content =
+    document.getElementById("policyContent");
+
+  title.textContent = policy;
+
+  let html = "";
+
+  if(policy === "Return Policy"){
+
+    html = `
+      <p style="line-height:1.7;color:#475569;">
+        Customers can request a return for eligible products according
+        to the return conditions applicable to the product.
+      </p>
+
+      <p style="line-height:1.7;color:#475569;margin-top:12px;">
+        For products priced above ₹100, a ₹30 return charge may be
+        deducted from the refundable amount.
+      </p>
+    `;
+
+  }
+
+  else if(policy === "Refund Policy"){
+
+    html = `
+      <p style="line-height:1.7;color:#475569;">
+        Once a valid return is approved and processed, the eligible
+        refund amount will be processed according to the applicable
+        refund procedure.
+      </p>
+
+      <p style="line-height:1.7;color:#475569;margin-top:12px;">
+        Any applicable return charge will be deducted before the refund.
+      </p>
+    `;
+
+  }
+
+  else if(policy === "Exchange Policy"){
+
+    html = `
+      <p style="line-height:1.7;color:#475569;">
+        Eligible products may be exchanged subject to product availability
+        and the applicable exchange conditions.
+      </p>
+    `;
+
+  }
+
+  else if(policy === "Cancellation Policy"){
+
+    html = `
+      <p style="line-height:1.7;color:#475569;">
+        An order can be cancelled while it has not yet been shipped.
+      </p>
+
+      <p style="line-height:1.7;color:#475569;margin-top:12px;">
+        Once an order has reached the shipped stage, cancellation may no
+        longer be available.
+      </p>
+    `;
+
+  }
+
+  else if(policy === "Shipping Policy"){
+
+    html = `
+      <p style="line-height:1.7;color:#475569;">
+        Orders are processed and shipped after order confirmation.
+        Delivery time can vary depending on the destination and
+        logistics conditions.
+      </p>
+    `;
+
+  }
+
+  content.innerHTML = html;
+
+  document
+    .getElementById("policyModal")
+    .classList.add("show");
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+function renderProducts(list = products){
+
+  const grid =
+    document.getElementById("productsGrid");
+
+  if(!list.length){
+
+    grid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        background:white;
+        padding:35px;
+        border-radius:14px;
+        text-align:center;
+        color:#64748b;
+      ">
+        No products found.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML = list.map(product => `
+
+    <div class="product-card">
+
+      <img
+        src="${escapeHtml(product.image)}"
+        alt="${escapeHtml(product.name)}"
+      >
+
+      <div class="product-info">
+
+        <h3>
+          ${escapeHtml(product.name)}
+        </h3>
+
+        <div class="price">
+          ₹${product.price}
+        </div>
+
+        <small>
+          ${escapeHtml(product.category)}
+        </small>
+
+        <div class="product-actions">
+
+          <button
+            class="view-btn"
+            onclick="openProductView('${product.id}')"
+          >
+            View
+          </button>
+
+          <button
+            class="buy-btn"
+            onclick="openOrderModal('${product.id}')"
+          >
+            Buy Now
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+function filterCategory(category, button){
+
+  currentCategory = category;
+
+  document
+    .querySelectorAll(".categories button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+  let filtered = products;
+
+  if(category !== "All"){
+
+    filtered =
+      filtered.filter(product =>
+        product.category === category
+      );
+
+  }
+
+  if(search){
+
+    filtered =
+      filtered.filter(product =>
+        product.name.toLowerCase().includes(search) ||
+        product.category.toLowerCase().includes(search)
+      );
+
+  }
+
+  renderProducts(filtered);
+
+}
+
+
+function searchProducts(){
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+  let filtered = products;
+
+  if(currentCategory !== "All"){
+
+    filtered =
+      filtered.filter(product =>
+        product.category === currentCategory
+      );
+
+  }
+
+  if(search){
+
+    filtered =
+      filtered.filter(product =>
+        product.name.toLowerCase().includes(search) ||
+        product.category.toLowerCase().includes(search)
+      );
+
+  }
+
+  renderProducts(filtered);
+
+}
+
+
+/* =========================================================
+   PRODUCT VIEW
+========================================================= */
+
+function openProductView(productId){
+
+  const product =
+    products.find(p => p.id === productId);
+
+  if(!product){
+    return;
+  }
+
+  currentProduct = product;
+
+  hideAllPages();
+
+  document
+    .getElementById("productPage")
+    .classList.add("active");
+
+  const related =
+    products
+      .filter(p =>
+        p.id !== product.id &&
+        p.category === product.category
+      )
+      .slice(0,5);
+
+  const fallbackRelated =
+    products
+      .filter(p => p.id !== product.id)
+      .slice(0,5);
+
+  const youMayLike =
+    related.length ? related : fallbackRelated;
+
+
+  document.getElementById("productDetail").innerHTML = `
+
+    <div class="product-detail">
+
+      <img
+        src="${escapeHtml(product.image)}"
+        alt="${escapeHtml(product.name)}"
+      >
+
+      <div class="product-detail-info">
+
+        <h1>
+          ${escapeHtml(product.name)}
+        </h1>
+
+        <div class="detail-price">
+          ₹${product.price}
+        </div>
+
+        <p>
+          ${escapeHtml(product.description)}
+        </p>
+
+        <strong>Select Size</strong>
+
+        <select
+          id="detailSize"
+          class="size-select"
+        >
+
+          ${product.sizes.map(size => `
+            <option value="${escapeHtml(size)}">
+              ${escapeHtml(size)}
+            </option>
+          `).join("")}
+
+        </select>
+
+        <button
+          class="detail-buy"
+          onclick="openOrderModal('${product.id}')"
+        >
+          Buy Now
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="you-may-like">
+
+      <h2 class="section-title">
+        You May Like
+      </h2>
+
+      <div class="products-grid">
+
+        ${youMayLike.map(item => `
+
+          <div class="product-card">
+
+            <img
+              src="${escapeHtml(item.image)}"
+              alt="${escapeHtml(item.name)}"
+            >
+
+            <div class="product-info">
+
+              <h3>
+                ${escapeHtml(item.name)}
+              </h3>
+
+              <div class="price">
+                ₹${item.price}
+              </div>
+
+              <div class="product-actions">
+
+                <button
+                  class="view-btn"
+                  onclick="openProductView('${item.id}')"
+                >
+                  View
+                </button>
+
+                <button
+                  class="buy-btn"
+                  onclick="openOrderModal('${item.id}')"
+                >
+                  Buy
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+    </div>
+
+  `;
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   ORDER MODAL
+========================================================= */
+
+function openOrderModal(productId){
+
+  const product =
+    products.find(p => p.id === productId);
+
+  if(!product){
+    return;
+  }
+
+  currentProduct = product;
+
+  const summary =
+    document.getElementById("orderSummary");
+
+  summary.innerHTML = `
+
+    <img
+      src="${escapeHtml(product.image)}"
+      alt="${escapeHtml(product.name)}"
+    >
+
+    <strong>
+      ${escapeHtml(product.name)}
+    </strong>
+
+    <p style="margin-top:7px;">
+      ₹${product.price}
+    </p>
+
+  `;
+
+
+  const sizeSelect =
+    document.getElementById("customerSize");
+
+  sizeSelect.innerHTML =
+    product.sizes.map(size => `
+      <option value="${escapeHtml(size)}">
+        ${escapeHtml(size)}
+      </option>
+    `).join("");
+
+
+  if(
+    document.getElementById("detailSize") &&
+    currentProduct.id === productId
+  ){
+
+    const selected =
+      document.getElementById("detailSize").value;
+
+    if(product.sizes.includes(selected)){
+      sizeSelect.value = selected;
+    }
+
+  }
+
+
+  document
+    .getElementById("orderModal")
+    .classList.add("show");
+
+}
+
+
+function placeOrder(){
+
+  if(!currentProduct){
+    return;
+  }
+
+  const name =
+    document
+      .getElementById("customerName")
+      .value
+      .trim();
+
+  const phone =
+    normalizePhone(
+      document
+        .getElementById("customerPhone")
+        .value
+    );
+
+  const address =
+    document
+      .getElementById("customerAddress")
+      .value
+      .trim();
+
+  const size =
+    document
+      .getElementById("customerSize")
+      .value;
+
+
+  if(!name){
+
+    alert("Please enter your name.");
+
+    return;
+
+  }
+
+
+  if(!/^\d{10}$/.test(phone)){
+
+    alert("Please enter a valid 10 digit mobile number.");
+
+    return;
+
+  }
+
+
+  if(!address){
+
+    alert("Please enter your delivery address.");
+
+    return;
+
+  }
+
+
+  const orderId =
+    "SD" +
+    Date.now()
+      .toString()
+      .slice(-6);
+
+
+  const newOrder = {
+
+    id:orderId,
+
+    name:name,
+
+    phone:phone,
+
+    product:currentProduct.id,
+
+    size:size,
+
+    price:currentProduct.price,
+
+    status:"Order Placed",
+
+    location:"Order Processing Center",
+
+    expectedDelivery:
+      calculateExpectedDelivery(),
+
+    address:address,
+
+    date:
+      new Date().toLocaleDateString("en-IN"),
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+
+  const savedOrders =
+    JSON.parse(
+      localStorage.getItem("smartstore_orders") || "[]"
+    );
+
+
+  savedOrders.push(newOrder);
+
+
+  localStorage.setItem(
+    "smartstore_orders",
+    JSON.stringify(savedOrders)
+  );
+
+
+  closeModal("orderModal");
+
+
+  document.getElementById("successMessage").innerHTML =
+    `Your Order ID is <strong>${escapeHtml(orderId)}</strong>.<br>
+     Please keep this ID for tracking your order.`;
+
+
+  document
+    .getElementById("successModal")
+    .classList.add("show");
+
+
+  sendWhatsAppOrder(newOrder);
+
+}
+
+
+function calculateExpectedDelivery(){
+
+  const date =
+    new Date();
+
+  date.setDate(
+    date.getDate() + 4
+  );
+
+  return date.toLocaleDateString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+function sendWhatsAppOrder(order){
+
+  const product =
+    products.find(p =>
+      p.id === order.product
+    );
+
+  const message =
+`New Smart Deals Order
+
+Order ID: ${order.id}
+Customer: ${order.name}
+Mobile: ${order.phone}
+Product: ${product ? product.name : ""}
+Size: ${order.size}
+Price: ₹${order.price}
+Expected Delivery: ${order.expectedDelivery}`;
+
+  const url =
+    "https://wa.me/?text=" +
+    encodeURIComponent(message);
+
+  /*
+    WhatsApp opening is intentionally delayed
+    so that the order-success modal can appear first.
+  */
+
+  setTimeout(() => {
+
+    window.open(
+      url,
+      "_blank"
+    );
+
+  },500);
+
+}
+
+
+function openWhatsApp(){
+
+  const message =
+    "Hello Smart Deals, I need help with my order.";
+
+  const url =
+    "https://wa.me/?text=" +
+    encodeURIComponent(message);
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+}
+
+
+/* =========================================================
+   ORDERS STORAGE
+========================================================= */
+
+function getDemoOverrides(){
+
+  return JSON.parse(
+    localStorage.getItem(
+      "smartstore_order_overrides"
+    ) || "{}"
+  );
+
+}
+
+
+function getOrders(){
+
+  const overrides =
+    getDemoOverrides();
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "smartstore_orders"
+      ) || "[]"
+    );
+
+
+  const map =
+    new Map();
+
+
+  demoOrders.forEach(order => {
+
+    map.set(
+      order.id,
+      {
+        ...order,
+        ...(overrides[order.id] || {})
+      }
+    );
+
+  });
+
+
+  saved.forEach(order => {
+
+    map.set(
+      order.id,
+      order
+    );
+
+  });
+
+
+  return Array.from(map.values());
+
+}
+
+
+function saveOrderUpdate(updatedOrder){
+
+  const demoExists =
+    demoOrders.some(
+      order => order.id === updatedOrder.id
+    );
+
+
+  if(demoExists){
+
+    const overrides =
+      getDemoOverrides();
+
+    overrides[updatedOrder.id] =
+      updatedOrder;
+
+    localStorage.setItem(
+      "smartstore_order_overrides",
+      JSON.stringify(overrides)
+    );
+
+    return;
+
+  }
+
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "smartstore_orders"
+      ) || "[]"
+    );
+
+
+  const index =
+    saved.findIndex(
+      order => order.id === updatedOrder.id
+    );
+
+
+  if(index !== -1){
+
+    saved[index] =
+      updatedOrder;
+
+    localStorage.setItem(
+      "smartstore_orders",
+      JSON.stringify(saved)
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   ORDER TRACKING
+========================================================= */
+
+function trackOrderFromOrdersPage(){
+
+  const id =
+    document
+      .getElementById("ordersTrackId")
+      .value
+      .trim()
+      .toUpperCase();
+
+  const phone =
+    normalizePhone(
+      document
+        .getElementById("ordersTrackMobile")
+        .value
+    );
+
+  const error =
+    document.getElementById(
+      "ordersTrackError"
+    );
+
+
+  error.style.display = "none";
+
+  error.textContent = "";
+
+
+  if(!id){
+
+    showTrackError(
+      "Please enter your Order ID."
+    );
+
+    return;
+
+  }
+
+
+  if(!/^\d{10}$/.test(phone)){
+
+    showTrackError(
+      "Please enter a valid 10 digit mobile number."
+    );
+
+    return;
+
+  }
+
+
+  const order =
+    getOrders().find(item =>
+      String(item.id).toUpperCase() === id &&
+      normalizePhone(item.phone) === phone
+    );
+
+
+  if(!order){
+
+    showTrackError(
+      "Order not found. Please check your Order ID and registered mobile number."
+    );
+
+    document.getElementById(
+      "trackedOrderResult"
+    ).innerHTML = `
+
+      <div class="orders-empty">
+
+        <h3>Order Not Found</h3>
+
+        <p>
+          The Order ID and mobile number do not match any order.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  currentTrackingOrderId =
+    order.id;
+
+  renderTrackedOrder(order);
+
+}
+
+
+function showTrackError(message){
+
+  const error =
+    document.getElementById(
+      "ordersTrackError"
+    );
+
+  error.textContent =
+    message;
+
+  error.style.display =
+    "block";
+
+}
+
+
+function renderTrackedOrder(order){
+
+  const product =
+    products.find(
+      p => p.id === order.product
+    );
+
+
+  const result =
+    document.getElementById(
+      "trackedOrderResult"
+    );
+
+
+  if(!product){
+
+    result.innerHTML = `
+      <div class="orders-empty">
+        Product information is unavailable.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const status =
+    order.status || "Order Placed";
+
+
+  const statusClass =
+    status === "Delivered"
+      ? "delivered"
+      : status === "Cancelled"
+        ? "cancelled"
+        : "";
+
+
+  const canCancel =
+    [
+      "Order Placed",
+      "Order Confirmed",
+      "Processing"
+    ].includes(status);
+
+
+  const isDelivered =
+    status === "Delivered";
+
+
+  result.innerHTML = `
+
+    <div class="tracked-order">
+
+      <div class="order-top">
+
+        <div>
+
+          <h2>
+            Order #${escapeHtml(order.id)}
+          </h2>
+
+          <small>
+            Ordered on ${escapeHtml(order.date || "-")}
+          </small>
+
+        </div>
+
+        <div class="status-badge ${statusClass}">
+          ${escapeHtml(status)}
+        </div>
+
+      </div>
+
+
+      <div class="order-info-grid">
+
+        <div class="info-box">
+
+          <span>Customer Name</span>
+
+          <strong>
+            ${escapeHtml(order.name)}
+          </strong>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span>Mobile Number</span>
+
+          <strong>
+            ${escapeHtml(order.phone)}
+          </strong>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span>Order Date</span>
+
+          <strong>
+            ${escapeHtml(order.date || "-")}
+          </strong>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span>Delivery Address</span>
+
+          <strong>
+            ${escapeHtml(order.address || "-")}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="location-box">
+
+        <div class="location-row">
+
+          <div class="location-item">
+
+            <span>
+              Current Location
+            </span>
+
+            <strong>
+              ${escapeHtml(
+                order.location ||
+                getLocationByStatus(status)
+              )}
+            </strong>
+
+          </div>
+
+
+          <div class="location-item">
+
+            <span>
+              Expected Delivery
+            </span>
+
+            <strong>
+              ${escapeHtml(
+                order.expectedDelivery || "-"
+              )}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="order-product">
+
+        <img
+          src="${escapeHtml(product.image)}"
+          alt="${escapeHtml(product.name)}"
+        >
+
+        <div class="order-product-info">
+
+          <h3>
+            ${escapeHtml(product.name)}
+          </h3>
+
+          <p>
+            Category:
+            ${escapeHtml(product.category)}
+          </p>
+
+          <p>
+            Size:
+            ${escapeHtml(order.size || "One Size")}
+          </p>
+
+        </div>
+
+        <div class="order-product-price">
+
+          ₹${order.price}
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline">
+
+        <h3>
+          Order Status
+        </h3>
+
+        ${renderTimeline(status)}
+
+      </div>
+
+
+      ${
+        status === "Cancelled"
+        ? `
+          <div class="cancelled-note">
+
+            <strong>
+              Order Cancelled
+            </strong>
+
+            <br>
+
+            Reason:
+            ${escapeHtml(
+              order.cancelReason ||
+              "Customer requested cancellation"
+            )}
+
+          </div>
+        `
+        : ""
+      }
+
+
+      <div class="order-buttons">
+
+        ${
+          canCancel
+          ? `
+            <button
+              class="cancel-order-btn"
+              onclick="openCancelModal('${escapeHtml(order.id)}')"
+            >
+              Cancel Order
+            </button>
+          `
+          : ""
+        }
+
+
+        ${
+          isDelivered
+          ? `
+            <button
+              class="return-btn"
+              onclick="returnOrder('${escapeHtml(order.id)}')"
+            >
+              Return / Refund
+            </button>
+          `
+          : ""
+        }
+
+
+        <button
+          class="receipt-btn"
+          onclick="generateReceipt('${escapeHtml(order.id)}')"
+        >
+          Receipt
+        </button>
+
+
+        <button
+          class="clear-track-btn"
+          onclick="clearTrackedOrder()"
+        >
+          Track Another Order
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+function getLocationByStatus(status){
+
+  if(status === "Order Placed"){
+    return "Order Processing Center";
+  }
+
+  if(status === "Processing"){
+    return "Warehouse";
+  }
+
+  if(status === "Order Confirmed"){
+    return "Smart Deals Warehouse";
+  }
+
+  if(status === "Shipped"){
+    return "Transit Hub";
+  }
+
+  if(status === "Out for Delivery"){
+    return "Local Delivery Center";
+  }
+
+  if(status === "Delivered"){
+    return "Delivered to Customer";
+  }
+
+  if(status === "Cancelled"){
+    return "Order Cancelled";
+  }
+
+  return "Processing Center";
+
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+const statusSteps = [
+
+  "Order Placed",
+  "Order Confirmed",
+  "Shipped",
+  "Out for Delivery",
+  "Delivered"
+
+];
+
+
+function getStatusIndex(status){
+
+  const index =
+    statusSteps.indexOf(status);
+
+  if(index !== -1){
+    return index;
+  }
+
+  if(status === "Processing"){
+    return 0;
+  }
+
+  return 0;
+
+}
+
+
+function renderTimeline(status){
+
+  const currentIndex =
+    getStatusIndex(status);
+
+
+  return `
+
+    <div class="timeline-list">
+
+      ${statusSteps.map((step,index) => {
+
+        const done =
+          status !== "Cancelled" &&
+          index <= currentIndex;
+
+        const current =
+          status !== "Cancelled" &&
+          index === currentIndex;
+
+        return `
+
+          <div class="
+            timeline-item
+            ${done ? "done" : ""}
+            ${current ? "current" : ""}
+          ">
+
+            <div class="timeline-dot">
+              ${done ? "✓" : index + 1}
+            </div>
+
+            <span>
+              ${step}
+            </span>
+
+          </div>
+
+        `;
+
+      }).join("")}
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   CANCEL ORDER
+========================================================= */
+
+function openCancelModal(orderId){
+
+  const order =
+    getOrders().find(
+      item => item.id === orderId
+    );
+
+
+  if(!order){
+
+    alert("Order not found.");
+
+    return;
+
+  }
+
+
+  const cannotCancel =
+    [
+      "Shipped",
+      "Out for Delivery",
+      "Delivered",
+      "Cancelled"
+    ].includes(order.status);
+
+
+  if(cannotCancel){
+
+    alert(
+      "This order cannot be cancelled because it has already been shipped or completed."
+    );
+
+    return;
+
+  }
+
+
+  pendingCancelOrderId =
+    orderId;
+
+
+  document.getElementById(
+    "cancelReason"
+  ).value = "";
+
+
+  document.getElementById(
+    "cancelDetails"
+  ).value = "";
+
+
+  document
+    .getElementById("cancelModal")
+    .classList.add("show");
+
+}
+
+
+function confirmCancelOrder(){
+
+  if(!pendingCancelOrderId){
+    return;
+  }
+
+
+  const reason =
+    document
+      .getElementById("cancelReason")
+      .value
+      .trim();
+
+  const details =
+    document
+      .getElementById("cancelDetails")
+      .value
+      .trim();
+
+
+  if(!reason){
+
+    alert(
+      "Please select a cancellation reason."
+    );
+
+    return;
+
+  }
+
+
+  const order =
+    getOrders().find(
+      item => item.id === pendingCancelOrderId
+    );
+
+
+  if(!order){
+
+    alert("Order not found.");
+
+    return;
+
+  }
+
+
+  const cannotCancel =
+    [
+      "Shipped",
+      "Out for Delivery",
+      "Delivered",
+      "Cancelled"
+    ].includes(order.status);
+
+
+  if(cannotCancel){
+
+    closeModal("cancelModal");
+
+    alert(
+      "This order can no longer be cancelled."
+    );
+
+    renderTrackedOrder(order);
+
+    return;
+
+  }
+
+
+  const finalReason =
+    details
+      ? `${reason} - ${details}`
+      : reason;
+
+
+  const updatedOrder = {
+
+    ...order,
+
+    status:"Cancelled",
+
+    location:"Order Cancelled",
+
+    cancelReason:finalReason,
+
+    cancelledAt:
+      new Date().toLocaleString("en-IN")
+
+  };
+
+
+  saveOrderUpdate(
+    updatedOrder
+  );
+
+
+  closeModal("cancelModal");
+
+
+  pendingCancelOrderId = null;
+
+
+  currentTrackingOrderId =
+    updatedOrder.id;
+
+
+  renderTrackedOrder(
+    updatedOrder
+  );
+
+
+  alert(
+    "Your order has been cancelled successfully."
+  );
+
+}
+
+
+/* =========================================================
+   CLEAR TRACKING
+========================================================= */
+
+function clearTrackedOrder(){
+
+  currentTrackingOrderId = null;
+
+  document.getElementById(
+    "ordersTrackId"
+  ).value = "";
+
+  document.getElementById(
+    "ordersTrackMobile"
+  ).value = "";
+
+  document.getElementById(
+    "ordersTrackError"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "trackedOrderResult"
+  ).innerHTML = `
+
+    <div class="orders-empty">
+
+      <h3>No order selected</h3>
+
+      <p>
+        Enter your Order ID and mobile number above
+        to view your order details.
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   SUCCESS -> TRACK ORDER
+========================================================= */
+
+function goToTrackedOrder(){
+
+  closeModal("successModal");
+
+  showOrders();
+
+}
+
+
+/* =========================================================
+   RETURN / REFUND
+========================================================= */
+
+function returnOrder(orderId){
+
+  const order =
+    getOrders().find(
+      item => item.id === orderId
+    );
+
+
+  if(!order){
+    alert("Order not found.");
+    return;
+  }
+
+
+  if(order.status !== "Delivered"){
+
+    alert(
+      "Return can only be requested after delivery."
+    );
+
+    return;
+
+  }
+
+
+  const product =
+    products.find(
+      p => p.id === order.product
+    );
+
+
+  const price =
+    Number(order.price || product?.price || 0);
+
+
+  const returnCharge =
+    price > 100 ? 30 : 0;
+
+
+  const refund =
+    price - returnCharge;
+
+
+  const confirmed =
+    confirm(
+      `Return request
+
+Product: ${product ? product.name : ""}
+Order Amount: ₹${price}
+Return Charge: ₹${returnCharge}
+Refund Amount: ₹${refund}
+
+Do you want to request a return?`
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  alert(
+    `Return request submitted.
+
+Return Charge: ₹${returnCharge}
+Refund Amount: ₹${refund}
+
+Your request will be processed according to the return policy.`
+  );
+
+}
+
+
+/* =========================================================
+   RECEIPT
+========================================================= */
+
+function generateReceipt(orderId){
+
+  const order =
+    getOrders().find(
+      item => item.id === orderId
+    );
+
+
+  if(!order){
+
+    alert("Order not found.");
+
+    return;
+
+  }
+
+
+  const product =
+    products.find(
+      p => p.id === order.product
+    );
+
+
+  const receiptWindow =
+    window.open(
+      "",
+      "_blank"
+    );
+
+
+  if(!receiptWindow){
+
+    alert(
+      "Please allow pop-ups to generate the receipt."
+    );
+
+    return;
+
+  }
+
+
+  receiptWindow.document.write(`
+
+    <!DOCTYPE html>
+
+    <html>
+
+    <head>
+
+      <title>
+        Smart Deals Receipt
+      </title>
+
+      <style>
+
+        body{
+          font-family:Arial,sans-serif;
+          padding:40px;
+          color:#111827;
+        }
+
+        .receipt{
+          max-width:700px;
+          margin:auto;
+          border:1px solid #ddd;
+          padding:30px;
+          border-radius:12px;
+        }
+
+        h1{
+          color:#0d6efd;
+        }
+
+        .row{
+          display:flex;
+          justify-content:space-between;
+          gap:20px;
+          padding:12px 0;
+          border-bottom:1px solid #eee;
+        }
+
+        .total{
+          font-size:20px;
+          font-weight:bold;
+        }
+
+        @media print{
+          button{
+            display:none;
+          }
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <div class="receipt">
+
+        <h1>
+          Smart Deals
+        </h1>
+
+        <h2>
+          Order Receipt
+        </h2>
+
+        <div class="row">
+          <strong>Order ID</strong>
+          <span>${escapeHtml(order.id)}</span>
+        </div>
+
+        <div class="row">
+          <strong>Customer</strong>
+          <span>${escapeHtml(order.name)}</span>
+        </div>
+
+        <div class="row">
+          <strong>Mobile</strong>
+          <span>${escapeHtml(order.phone)}</span>
+        </div>
+
+        <div class="row">
+          <strong>Date</strong>
+          <span>${escapeHtml(order.date)}</span>
+        </div>
+
+        <div class="row">
+          <strong>Product</strong>
+          <span>${escapeHtml(product ? product.name : "-")}</span>
+        </div>
+
+        <div class="row">
+          <strong>Size</strong>
+          <span>${escapeHtml(order.size || "-")}</span>
+        </div>
+
+        <div class="row">
+          <strong>Status</strong>
+          <span>${escapeHtml(order.status)}</span>
+        </div>
+
+        <div class="row">
+          <strong>Current Location</strong>
+          <span>${escapeHtml(order.location || "-")}</span>
+        </div>
+
+        <div class="row">
+          <strong>Expected Delivery</strong>
+          <span>${escapeHtml(order.expectedDelivery || "-")}</span>
+        </div>
+
+        <div class="row">
+          <strong>Address</strong>
+          <span>${escapeHtml(order.address || "-")}</span>
+        </div>
+
+        <div class="row total">
+          <strong>Total</strong>
+          <span>₹${order.price}</span>
+        </div>
+
+        <br>
+
+        <button onclick="window.print()">
+          Print / Save as PDF
+        </button>
+
+      </div>
+
+    </body>
+
+    </html>
+
+  `);
+
+  receiptWindow.document.close();
+
+}
+
+
+/* =========================================================
+   INPUT EVENTS
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    renderProducts();
+
+    const phone =
+      document.getElementById(
+        "customerPhone"
+      );
+
+    if(phone){
+
+      phone.addEventListener(
+        "input",
+        function(){
+
+          this.value =
+            this.value
+              .replace(/\D/g,"")
+              .slice(0,10);
+
+        }
+      );
+
+    }
+
+
+    const trackPhone =
+      document.getElementById(
+        "ordersTrackMobile"
+      );
+
+    if(trackPhone){
+
+      trackPhone.addEventListener(
+        "input",
+        function(){
+
+          this.value =
+            this.value
+              .replace(/\D/g,"")
+              .slice(0,10);
+
+        }
+      );
+
+    }
+
+
+    const orderIdInput =
+      document.getElementById(
+        "ordersTrackId"
+      );
+
+    if(orderIdInput){
+
+      orderIdInput.addEventListener(
+        "input",
+        function(){
+
+          this.value =
+            this.value.toUpperCase();
+
+        }
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ENTER KEY FOR TRACKING
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key !== "Enter"){
+      return;
+    }
+
+
+    const ordersPage =
+      document.getElementById(
+        "ordersPage"
+      );
+
+
+    if(
+      ordersPage &&
+      ordersPage.classList.contains("active")
+    ){
+
+      const activeElement =
+        document.activeElement;
+
+
+      if(
+        activeElement &&
+        (
+          activeElement.id === "ordersTrackId" ||
+          activeElement.id === "ordersTrackMobile"
+        )
+      ){
+
+        trackOrderFromOrdersPage();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   MODAL BACKDROP
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target.classList.contains(
+        "modal-overlay"
+      )
+    ){
+
+      event.target.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
