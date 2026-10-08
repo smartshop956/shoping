@@ -1,0 +1,5522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Smart Deals - Online Shopping</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f6f8;
+  color:#222;
+}
+
+button,input,textarea,select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
+  background:#1769e0;
+  color:white;
+  padding:12px 15px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.search-box{
+  flex:1;
+  display:flex;
+  background:white;
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.search-box input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:11px;
+  font-size:14px;
+}
+
+.search-box button{
+  border:0;
+  background:white;
+  padding:0 13px;
+  font-size:18px;
+}
+
+.header-icons{
+  display:flex;
+  gap:8px;
+}
+
+.icon-btn{
+  border:0;
+  background:rgba(255,255,255,.15);
+  color:white;
+  border-radius:8px;
+  padding:9px 10px;
+  font-size:15px;
+}
+
+.nav{
+  max-width:1200px;
+  margin:10px auto 0;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+}
+
+.nav button{
+  flex:none;
+  border:0;
+  padding:8px 12px;
+  border-radius:20px;
+  background:rgba(255,255,255,.14);
+  color:white;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:18px 14px 80px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.hero{
+  background:linear-gradient(135deg,#1769e0,#3f8cff);
+  color:white;
+  border-radius:15px;
+  padding:25px 20px;
+  margin-bottom:18px;
+}
+
+.hero h1{
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.hero p{
+  opacity:.95;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:18px 0 12px;
+}
+
+.section-title h2{
+  font-size:20px;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.product-card{
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:.2s;
+}
+
+.product-card:hover{
+  transform:translateY(-2px);
+}
+
+.product-image{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  background:#eee;
+}
+
+.product-info{
+  padding:11px;
+}
+
+.product-name{
+  font-weight:bold;
+  font-size:15px;
+  line-height:1.3;
+  min-height:38px;
+}
+
+.price{
+  margin-top:7px;
+  font-size:18px;
+  font-weight:bold;
+  color:#1769e0;
+}
+
+.old-price{
+  color:#999;
+  text-decoration:line-through;
+  font-size:13px;
+  margin-left:5px;
+}
+
+.product-meta{
+  font-size:12px;
+  color:#666;
+  margin-top:7px;
+  line-height:1.5;
+}
+
+.free-delivery{
+  color:#168b45;
+  font-weight:bold;
+}
+
+.delivery-charge{
+  color:#555;
+  font-weight:bold;
+}
+
+.product-card button{
+  width:100%;
+  border:0;
+  background:#1769e0;
+  color:white;
+  padding:10px;
+  margin-top:10px;
+  border-radius:7px;
+}
+
+.detail-box,
+.cart-box,
+.checkout-box,
+.profile-box,
+.orders-box,
+.notification-box,
+.track-box,
+.login-box{
+  background:white;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.back-btn{
+  border:0;
+  background:#eee;
+  padding:9px 13px;
+  border-radius:8px;
+  margin-bottom:15px;
+}
+
+.detail-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+}
+
+.detail-image{
+  width:100%;
+  height:500px;
+  object-fit:contain;
+  background:#f2f2f2;
+  border-radius:12px;
+}
+
+.image-gallery{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-top:10px;
+  padding-bottom:3px;
+}
+
+.gallery-thumb{
+  width:72px;
+  height:72px;
+  object-fit:cover;
+  border-radius:8px;
+  border:2px solid transparent;
+  background:#eee;
+  flex:none;
+  cursor:pointer;
+}
+
+.gallery-thumb.active{
+  border-color:#1769e0;
+}
+
+.image-count{
+  font-size:12px;
+  color:#777;
+  margin-top:7px;
+}
+
+.detail-name{
+  font-size:28px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.detail-price{
+  font-size:27px;
+  color:#1769e0;
+  font-weight:bold;
+}
+
+.delivery-box{
+  background:#eef6ff;
+  color:#1557a6;
+  padding:12px;
+  border-radius:9px;
+  margin:15px 0;
+}
+
+.product-details-box{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:13px;
+  margin-top:15px;
+}
+
+.product-details-row{
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+.product-details-row:last-child{
+  border-bottom:0;
+}
+
+.product-details-row b{
+  color:#333;
+}
+
+.size-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:7px;
+}
+
+.size-tag{
+  background:#eef4ff;
+  color:#1769e0;
+  border:1px solid #d5e4ff;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.highlights{
+  margin-top:20px;
+}
+
+.highlights h3{
+  margin-bottom:10px;
+}
+
+.highlight-table{
+  width:100%;
+  border:1px solid #e3e7ed;
+  border-radius:10px;
+  overflow:hidden;
+  background:white;
+}
+
+.highlight-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.highlight-row:last-child{
+  border-bottom:0;
+}
+
+.highlight-label,
+.highlight-value{
+  padding:10px;
+  line-height:1.4;
+  word-break:break-word;
+}
+
+.highlight-label{
+  background:#f5f7fa;
+  font-weight:bold;
+  color:#333;
+  border-right:1px solid #e5e7eb;
+}
+
+.highlight-value{
+  color:#555;
+}
+
+.highlight-old{
+  margin-top:10px;
+}
+
+.highlight-old li{
+  list-style:none;
+  margin:7px 0;
+}
+
+.highlight-old li:before{
+  content:"✓";
+  color:#168b45;
+  font-weight:bold;
+  margin-right:8px;
+}
+
+.big-btn{
+  width:100%;
+  border:0;
+  background:#1769e0;
+  color:white;
+  padding:13px;
+  border-radius:8px;
+  font-size:16px;
+  margin-top:10px;
+}
+
+.secondary-btn{
+  background:#eee;
+  color:#222;
+}
+
+.cart-item{
+  display:flex;
+  gap:13px;
+  align-items:center;
+  border-bottom:1px solid #eee;
+  padding:13px 0;
+}
+
+.cart-item img{
+  width:75px;
+  height:75px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.cart-item-info{
+  flex:1;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+}
+
+.qty button{
+  width:28px;
+  height:28px;
+  border:0;
+  border-radius:6px;
+  background:#eee;
+}
+
+.form-group{
+  margin-bottom:13px;
+}
+
+.form-group label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  outline:none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color:#1769e0;
+}
+
+.readonly{
+  background:#f1f1f1;
+  color:#666;
+}
+
+.order-card{
+  background:white;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:13px;
+  box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+.status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#eaf3ff;
+  color:#1769e0;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.order-summary-box{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:12px;
+  margin-top:12px;
+}
+
+.order-item-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+.order-item-row:last-child{
+  border-bottom:0;
+}
+
+.progress{
+  display:flex;
+  justify-content:space-between;
+  margin:22px 0;
+  position:relative;
+}
+
+.progress:before{
+  content:"";
+  position:absolute;
+  left:5%;
+  right:5%;
+  top:13px;
+  height:3px;
+  background:#ddd;
+}
+
+.step{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  width:16%;
+  font-size:11px;
+  color:#777;
+}
+
+.step-circle{
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  background:#ddd;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:12px;
+}
+
+.step.active{
+  color:#1769e0;
+  font-weight:bold;
+}
+
+.step.active .step-circle{
+  background:#1769e0;
+}
+
+.location-box{
+  background:#f3f8ff;
+  padding:13px;
+  border-radius:9px;
+  margin-top:10px;
+}
+
+.progress-wrap{
+  margin-top:15px;
+}
+
+.progress-track{
+  width:100%;
+  height:10px;
+  background:#ddd;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  background:#1769e0;
+  border-radius:20px;
+  transition:.4s;
+}
+
+.progress-number{
+  text-align:right;
+  margin-top:5px;
+  font-size:13px;
+  color:#555;
+}
+
+.live-update{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  color:#168b45;
+  font-size:12px;
+  margin-top:7px;
+}
+
+.profile-header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.profile-picture{
+  width:105px;
+  height:105px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #1769e0;
+  background:#eee;
+}
+
+.profile-setup{
+  max-width:500px;
+  margin:30px auto;
+}
+
+.profile-setup .title{
+  text-align:center;
+  margin-bottom:7px;
+}
+
+.profile-setup .subtitle{
+  text-align:center;
+  color:#777;
+  margin-bottom:20px;
+}
+
+.google-btn{
+  width:100%;
+  padding:12px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-weight:bold;
+}
+
+.google-logo{
+  width:20px;
+  height:20px;
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:17px 0;
+  color:#888;
+  font-size:13px;
+}
+
+.divider:before,
+.divider:after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:#ddd;
+}
+
+.login-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:3000;
+  padding:15px;
+}
+
+.login-modal.show{
+  display:flex;
+}
+
+.login-box{
+  width:100%;
+  max-width:430px;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.login-tabs{
+  display:flex;
+  gap:5px;
+  background:#f1f1f1;
+  padding:4px;
+  border-radius:8px;
+  margin-bottom:18px;
+}
+
+.login-tabs button{
+  flex:1;
+  border:0;
+  background:transparent;
+  padding:9px;
+  border-radius:6px;
+}
+
+.login-tabs button.active{
+  background:white;
+  color:#1769e0;
+  font-weight:bold;
+  box-shadow:0 1px 4px rgba(0,0,0,.1);
+}
+
+.close-login{
+  float:right;
+  border:0;
+  background:#eee;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:#777;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%) translateY(100px);
+  background:#222;
+  color:white;
+  padding:12px 18px;
+  border-radius:8px;
+  z-index:5000;
+  transition:.3s;
+  max-width:90%;
+  text-align:center;
+}
+
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+}
+
+.footer{
+  text-align:center;
+  padding:25px 10px;
+  color:#777;
+}
+
+@media(max-width:900px){
+  .product-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:650px){
+
+  .header-top{
+    flex-wrap:wrap;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .search-box{
+    order:3;
+    flex-basis:100%;
+  }
+
+  .product-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+
+  .detail-layout{
+    grid-template-columns:1fr;
+  }
+
+  .detail-name{
+    font-size:22px;
+  }
+
+  .detail-image{
+    height:350px;
+  }
+
+  .progress{
+    overflow-x:auto;
+    gap:5px;
+  }
+
+  .step{
+    min-width:70px;
+  }
+
+  .progress:before{
+    left:35px;
+    right:35px;
+  }
+
+  .cart-item{
+    align-items:flex-start;
+  }
+}
+
+@media(max-width:380px){
+
+  .product-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .product-name{
+    font-size:13px;
+  }
+
+  .price{
+    font-size:16px;
+  }
+
+  .highlight-label,
+  .highlight-value{
+    padding:8px;
+    font-size:13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="header-top">
+
+    <div class="logo">Smart Deals</div>
+
+    <div class="search-box">
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search products..."
+        oninput="searchProducts()">
+
+      <button onclick="searchProducts()">🔍</button>
+
+    </div>
+
+    <div class="header-icons">
+
+      <button class="icon-btn" onclick="showNotifications()">
+        🔔
+      </button>
+
+      <button class="icon-btn" onclick="showCart()">
+        🛒 <span id="cartCount">0</span>
+      </button>
+
+      <button class="icon-btn" onclick="openAccount()">
+        👤
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="nav">
+
+    <button onclick="showHome()">Home</button>
+    <button onclick="showOrders()">Orders</button>
+    <button onclick="showCart()">Cart</button>
+    <button onclick="showNotifications()">Notifications</button>
+    <button onclick="openAccount()">Profile</button>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+<!-- HOME -->
+
+<section id="homePage" class="page active">
+
+  <div class="hero">
+
+    <h1>Welcome to Smart Deals</h1>
+
+    <p>
+      Shop your favourite products easily and track your order.
+    </p>
+
+  </div>
+
+  <div class="section-title">
+
+    <h2>Products</h2>
+
+    <span id="productCount"></span>
+
+  </div>
+
+  <div id="productGrid" class="product-grid"></div>
+
+</section>
+
+
+<!-- PRODUCT DETAIL -->
+
+<section id="productPage" class="page">
+
+  <button class="back-btn" onclick="showHome()">
+    ← Back
+  </button>
+
+  <div id="productDetail"></div>
+
+</section>
+
+
+<!-- CART -->
+
+<section id="cartPage" class="page">
+
+  <div class="section-title">
+    <h2>My Cart</h2>
+  </div>
+
+  <div id="cartContent"></div>
+
+</section>
+
+
+<!-- CHECKOUT -->
+
+<section id="checkoutPage" class="page">
+
+  <button class="back-btn" onclick="showCart()">
+    ← Back to Cart
+  </button>
+
+  <div class="checkout-box">
+
+    <h2>Checkout</h2>
+
+    <br>
+
+    <div class="form-group">
+      <label>Full Name</label>
+      <input id="checkoutName" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Mobile Number</label>
+      <input id="checkoutPhone" type="tel">
+    </div>
+
+    <div class="form-group">
+
+      <label>Delivery Address</label>
+
+      <textarea
+        id="checkoutAddress"
+        rows="4"
+        placeholder="Enter complete delivery address"></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Payment Method</label>
+
+      <select id="paymentMethod">
+
+        <option value="COD">
+          Cash on Delivery
+        </option>
+
+      </select>
+
+    </div>
+
+    <div id="checkoutSummary"></div>
+
+    <button
+      class="big-btn"
+      onclick="placeOrder()">
+
+      Place Order
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ORDERS -->
+
+<section id="ordersPage" class="page">
+
+  <div class="section-title">
+    <h2>My Orders</h2>
+  </div>
+
+  <div id="ordersContent"></div>
+
+</section>
+
+
+<!-- TRACK -->
+
+<section id="trackPage" class="page">
+
+  <button
+    class="back-btn"
+    onclick="showOrders()">
+
+    ← Back to Orders
+
+  </button>
+
+  <div id="trackContent"></div>
+
+</section>
+
+
+<!-- NOTIFICATIONS -->
+
+<section id="notificationsPage" class="page">
+
+  <div class="section-title">
+    <h2>Notifications</h2>
+  </div>
+
+  <div id="notificationsContent"></div>
+
+</section>
+
+
+<!-- PROFILE SETUP -->
+
+<section id="profileSetupPage" class="page">
+
+  <div class="profile-box profile-setup">
+
+    <div class="title">
+      <h2>Complete Your Profile</h2>
+    </div>
+
+    <div class="subtitle">
+      Please complete your profile to continue.
+    </div>
+
+    <div class="profile-header">
+
+      <img
+        id="setupPhotoPreview"
+        class="profile-picture"
+        src="https://via.placeholder.com/105?text=Photo"
+        alt="Profile">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Profile Picture</label>
+
+      <input
+        id="setupPhoto"
+        type="url"
+        placeholder="Paste profile picture URL"
+        oninput="previewSetupPhoto()">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Name</label>
+
+      <input
+        id="setupName"
+        type="text"
+        placeholder="Enter your name">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Mobile Number</label>
+
+      <input
+        id="setupPhone"
+        type="tel"
+        maxlength="15"
+        placeholder="Enter mobile number">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Email</label>
+
+      <input
+        id="setupEmail"
+        class="readonly"
+        type="email"
+        readonly>
+
+    </div>
+
+    <button
+      class="big-btn"
+      onclick="saveProfileSetup()">
+
+      Save Profile
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ACCOUNT -->
+
+<section id="accountPage" class="page">
+
+  <div class="profile-box">
+
+    <div class="profile-header">
+
+      <img
+        id="profilePhoto"
+        class="profile-picture"
+        src="https://via.placeholder.com/105?text=User">
+
+      <h2 id="profileName">User</h2>
+
+      <p id="profileEmail"></p>
+
+    </div>
+
+    <div id="profileDetails"></div>
+
+    <button
+      class="big-btn"
+      onclick="editProfile()">
+
+      Edit Profile
+
+    </button>
+
+    <button
+      class="big-btn secondary-btn"
+      onclick="logout()">
+
+      Logout
+
+    </button>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer class="footer">
+  © 2026 Smart Deals. All Rights Reserved.
+</footer>
+
+
+<!-- LOGIN MODAL -->
+
+<div id="loginModal" class="login-modal">
+
+  <div class="login-box">
+
+    <button
+      class="close-login"
+      onclick="closeLogin()">
+
+      ×
+
+    </button>
+
+    <h2 id="loginTitle">Login</h2>
+
+    <br>
+
+    <div class="login-tabs">
+
+      <button
+        id="emailTab"
+        class="active"
+        onclick="switchLogin('email')">
+
+        Login
+
+      </button>
+
+      <button
+        id="signupTab"
+        onclick="switchLogin('signup')">
+
+        Create Account
+
+      </button>
+
+    </div>
+
+
+    <div id="emailLoginForm">
+
+      <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="Enter email">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Password</label>
+
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="Enter password">
+
+      </div>
+
+      <button
+        class="big-btn"
+        onclick="emailLogin()">
+
+        Login
+
+      </button>
+
+      <button
+        class="big-btn secondary-btn"
+        onclick="forgotPassword()">
+
+        Forgot Password?
+
+      </button>
+
+      <div class="divider">OR</div>
+
+      <button
+        class="google-btn"
+        onclick="googleLogin()">
+
+        <svg class="google-logo" viewBox="0 0 24 24">
+
+          <path fill="#4285F4"
+          d="M21.35 12.27c0-.79-.07-1.55-.22-2.27H12v4.3h5.22a4.47 4.47 0 0 1-1.94 2.93v2.43h3.14c1.84-1.69 2.93-4.18 2.93-7.39z"/>
+
+          <path fill="#34A853"
+          d="M12 21.9c2.63 0 4.84-.87 6.45-2.34l-3.14-2.43c-.87.58-1.98.93-3.31.93-2.54 0-4.69-1.72-5.46-4.03H3.3v2.51A9.75 9.75 0 0 0 12 21.9z"/>
+
+          <path fill="#FBBC05"
+          d="M6.54 14.03A5.86 5.86 0 0 1 6.23 12c0-.7.12-1.38.31-2.03V7.46H3.3A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1.05 4.54l3.24-2.51z"/>
+
+          <path fill="#EA4335"
+          d="M12 5.94c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 2.98 14.63 2.1 12 2.1a9.75 9.75 0 0 0-8.7 5.36l3.24 2.51C7.31 7.66 9.46 5.94 12 5.94z"/>
+
+        </svg>
+
+        Continue with Google
+
+      </button>
+
+    </div>
+
+
+    <div id="signupForm" style="display:none;">
+
+      <div class="form-group">
+
+        <label>Name</label>
+
+        <input
+          id="signupName"
+          type="text"
+          placeholder="Enter your name">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+          id="signupEmail"
+          type="email"
+          placeholder="Enter email">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Password</label>
+
+        <input
+          id="signupPassword"
+          type="password"
+          placeholder="Minimum 6 characters">
+
+      </div>
+
+      <button
+        class="big-btn"
+        onclick="emailSignup()">
+
+        Create Account
+
+      </button>
+
+      <div class="divider">OR</div>
+
+      <button
+        class="google-btn"
+        onclick="googleLogin()">
+
+        Continue with Google
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
+  updateProfile,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  addDoc,
+  query,
+  where,
+  onSnapshot,
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+
+/* ================= FIREBASE ================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyDhxguIh_oSvRF0DqKKXO3frzQV0haYeGo",
+
+  authDomain:
+    "smart-deals-99646.firebaseapp.com",
+
+  projectId:
+    "smart-deals-99646",
+
+  storageBucket:
+    "smart-deals-99646.firebasestorage.app",
+
+  messagingSenderId:
+    "778513438968",
+
+  appId:
+    "1:778513438968:web:ac20adc60ff63edd42830d"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+const googleProvider =
+  new GoogleAuthProvider();
+
+
+/* ================= GLOBAL ================= */
+
+let currentUser = null;
+let currentProfile = null;
+let products = [];
+
+let cart =
+  JSON.parse(
+    localStorage.getItem("smartDealsCart") || "[]"
+  );
+
+let unsubscribeOrders = null;
+let trackingOrderId = null;
+let unsubscribeTrackingOrder = null;
+
+
+/* ================= ORDER STEPS ================= */
+
+const ORDER_STEPS = [
+  "Pending",
+  "Confirmed",
+  "Packed",
+  "Shipped",
+  "Out for Delivery",
+  "Delivered"
+];
+
+
+/* ================= HELPERS ================= */
+
+function toast(message){
+
+  const el =
+    document.getElementById("toast");
+
+  el.textContent = message;
+
+  el.classList.add("show");
+
+  setTimeout(()=>{
+    el.classList.remove("show");
+  },2800);
+}
+
+
+function saveCart(){
+
+  localStorage.setItem(
+    "smartDealsCart",
+    JSON.stringify(cart)
+  );
+
+  updateCartCount();
+}
+
+
+function updateCartCount(){
+
+  const count =
+    cart.reduce(
+      (sum,item)=>
+        sum + Number(item.qty || 0),
+      0
+    );
+
+  document.getElementById("cartCount")
+    .textContent = count;
+}
+
+
+function money(value){
+
+  return "₹" +
+    Number(value || 0)
+      .toLocaleString("en-IN");
+}
+
+
+function formatDate(value){
+
+  if(!value){
+    return "Not available";
+  }
+
+  let date;
+
+  try{
+
+    if(value?.toDate){
+
+      date = value.toDate();
+
+    }else{
+
+      const str = String(value);
+
+      if(/^\d{4}-\d{2}-\d{2}$/.test(str)){
+
+        date =
+          new Date(
+            str + "T00:00:00"
+          );
+
+      }else{
+
+        date = new Date(value);
+      }
+    }
+
+  }catch(e){
+
+    return "Not available";
+  }
+
+  if(isNaN(date.getTime())){
+    return "Not available";
+  }
+
+  return date.toLocaleDateString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
+}
+
+
+function getExpectedDeliveryRange(
+  baseDate = new Date()
+){
+
+  const start = new Date(baseDate);
+  const end = new Date(baseDate);
+
+  start.setDate(start.getDate()+4);
+  end.setDate(end.getDate()+7);
+
+  return {start,end};
+}
+
+
+function getExpectedDeliveryText(
+  date = new Date()
+){
+
+  const range =
+    getExpectedDeliveryRange(date);
+
+  return `${formatDate(range.start)} - ${formatDate(range.end)}`;
+}
+
+
+function getProductDeliveryCharge(product){
+
+  if(!product) return 0;
+
+  if(product.freeDelivery === true){
+    return 0;
+  }
+
+  return Math.max(
+    0,
+    Number(product.deliveryCharge || 0)
+  );
+}
+
+
+function getCartProduct(item){
+
+  return products.find(
+    product => product.id === item.id
+  );
+}
+
+
+function getCartDeliveryTotal(){
+
+  let total = 0;
+
+  cart.forEach(item=>{
+
+    const product =
+      getCartProduct(item);
+
+    if(product){
+
+      total +=
+        getProductDeliveryCharge(product);
+
+    }else{
+
+      total +=
+        Number(item.deliveryCharge || 0);
+    }
+
+  });
+
+  return total;
+}
+
+
+function getCartSubtotal(){
+
+  return cart.reduce(
+    (sum,item)=>
+      sum +
+      Number(item.price || 0) *
+      Number(item.qty || 0),
+    0
+  );
+}
+
+
+function getPage(id){
+  return document.getElementById(id);
+}
+
+
+function hidePages(){
+
+  document.querySelectorAll(".page")
+    .forEach(page=>{
+      page.classList.remove("active");
+    });
+}
+
+
+function requireLogin(){
+
+  if(!currentUser){
+
+    openLogin();
+
+    return false;
+  }
+
+  return true;
+}
+
+
+function profileSetupRequired(){
+
+  return currentUser &&
+         currentProfile &&
+         currentProfile.profileSetupComplete !== true;
+}
+
+
+function getOrderStep(order){
+
+  let step =
+    Number(order.statusStep);
+
+  if(
+    !isNaN(step) &&
+    step >= 0 &&
+    step <= ORDER_STEPS.length-1
+  ){
+
+    return step;
+  }
+
+  const status =
+    String(order.status || "Pending");
+
+  const index =
+    ORDER_STEPS.indexOf(status);
+
+  return index >= 0 ? index : 0;
+}
+
+
+function getOrderProgress(order){
+
+  const saved =
+    Number(
+      order.orderProgress ??
+      order.progress
+    );
+
+  if(!isNaN(saved) && saved >= 0){
+
+    return Math.min(
+      100,
+      Math.max(0,saved)
+    );
+  }
+
+  const step = getOrderStep(order);
+
+  return Math.round(
+    step /
+    (ORDER_STEPS.length-1) *
+    100
+  );
+}
+
+
+/* ================= PRODUCT HELPERS ================= */
+
+/*
+  Admin Panel अब images array save करता है।
+
+  लेकिन पुराने products में:
+  image
+  imageURL
+  photoURL
+
+  इनमें से कोई भी हो सकता है।
+*/
+
+function getProductImages(product){
+
+  let images = [];
+
+  if(Array.isArray(product?.images)){
+
+    images =
+      product.images
+        .map(x=>String(x || "").trim())
+        .filter(Boolean);
+
+  }
+
+  /*
+    Compatibility:
+    अगर images array नहीं है तो
+    पुराने image fields इस्तेमाल होंगे।
+  */
+
+  if(!images.length){
+
+    const oldImage =
+      product?.image ||
+      product?.imageURL ||
+      product?.imageUrl ||
+      product?.photoURL ||
+      "";
+
+    if(oldImage){
+      images = [oldImage];
+    }
+  }
+
+  /*
+    Maximum 6 images ही display करें।
+  */
+
+  return images.slice(0,6);
+}
+
+
+function getProductSizes(product){
+
+  if(Array.isArray(product?.sizes)){
+
+    return product.sizes
+      .map(size=>String(size ?? "").trim())
+      .filter(Boolean);
+
+  }
+
+  /*
+    अगर future में sizes string में save हो
+    जाए तो comma से भी support होगा।
+  */
+
+  if(typeof product?.sizes === "string"){
+
+    return product.sizes
+      .split(",")
+      .map(size=>size.trim())
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
+
+/*
+  New admin format:
+
+  highlights: [
+    {
+      label:"Material",
+      value:"100% Cotton"
+    },
+    {
+      label:"Category",
+      value:"T-Shirt"
+    }
+  ]
+
+  पुराने format:
+
+  highlights:[
+    "Good quality",
+    "Easy ordering"
+  ]
+
+  दोनों support होंगे।
+*/
+
+function getProductHighlights(product){
+
+  if(!Array.isArray(product?.highlights)){
+    return [];
+  }
+
+  return product.highlights
+    .slice(0,6)
+    .map(item=>{
+
+      if(
+        item &&
+        typeof item === "object"
+      ){
+
+        return {
+          label:
+            String(
+              item.label ??
+              item.name ??
+              item.key ??
+              ""
+            ).trim(),
+
+          value:
+            String(
+              item.value ??
+              item.details ??
+              item.text ??
+              ""
+            ).trim()
+        };
+
+      }
+
+      return {
+        label:"",
+        value:String(item ?? "").trim()
+      };
+
+    })
+    .filter(item=>
+      item.label ||
+      item.value
+    );
+}
+
+
+function getFirstProductImage(product){
+
+  const images =
+    getProductImages(product);
+
+  return images[0] ||
+    "https://via.placeholder.com/500?text=Product";
+}
+
+
+/* ================= PAGE NAVIGATION ================= */
+
+window.showHome = function(){
+
+  if(profileSetupRequired()){
+
+    showProfileSetup();
+
+    return;
+  }
+
+  hidePages();
+
+  getPage("homePage")
+    .classList.add("active");
+
+  window.scrollTo(0,0);
+
+  renderProducts(products);
+};
+
+
+window.showCart = function(){
+
+  if(!requireLogin()) return;
+
+  if(profileSetupRequired()){
+
+    showProfileSetup();
+
+    return;
+  }
+
+  hidePages();
+
+  getPage("cartPage")
+    .classList.add("active");
+
+  renderCart();
+
+  window.scrollTo(0,0);
+};
+
+
+window.showOrders = async function(){
+
+  if(!requireLogin()) return;
+
+  if(profileSetupRequired()){
+
+    showProfileSetup();
+
+    return;
+  }
+
+  hidePages();
+
+  getPage("ordersPage")
+    .classList.add("active");
+
+  await loadOrders();
+
+  window.scrollTo(0,0);
+};
+
+
+window.showNotifications = async function(){
+
+  if(!requireLogin()) return;
+
+  if(profileSetupRequired()){
+
+    showProfileSetup();
+
+    return;
+  }
+
+  hidePages();
+
+  getPage("notificationsPage")
+    .classList.add("active");
+
+  await loadNotifications();
+
+  window.scrollTo(0,0);
+};
+
+
+window.openAccount = function(){
+
+  if(!requireLogin()) return;
+
+  if(profileSetupRequired()){
+
+    showProfileSetup();
+
+    return;
+  }
+
+  hidePages();
+
+  getPage("accountPage")
+    .classList.add("active");
+
+  renderProfile();
+
+  window.scrollTo(0,0);
+};
+
+
+/* ================= AUTH ================= */
+
+window.openLogin = function(){
+
+  document.getElementById("loginModal")
+    .classList.add("show");
+
+  switchLogin("email");
+};
+
+
+window.closeLogin = function(){
+
+  document.getElementById("loginModal")
+    .classList.remove("show");
+};
+
+
+window.switchLogin = function(type){
+
+  const emailTab =
+    document.getElementById("emailTab");
+
+  const signupTab =
+    document.getElementById("signupTab");
+
+  const emailForm =
+    document.getElementById("emailLoginForm");
+
+  const signupForm =
+    document.getElementById("signupForm");
+
+
+  if(type === "signup"){
+
+    emailTab.classList.remove("active");
+    signupTab.classList.add("active");
+
+    emailForm.style.display="none";
+    signupForm.style.display="block";
+
+  }else{
+
+    signupTab.classList.remove("active");
+    emailTab.classList.add("active");
+
+    signupForm.style.display="none";
+    emailForm.style.display="block";
+  }
+};
+
+
+/* ================= AUTH ERROR ================= */
+
+function getAuthError(error){
+
+  const code = error?.code || "";
+
+  const messages = {
+
+    "auth/invalid-email":
+      "Email address is invalid.",
+
+    "auth/user-not-found":
+      "Account not found.",
+
+    "auth/wrong-password":
+      "Wrong password.",
+
+    "auth/invalid-credential":
+      "Email or password is incorrect.",
+
+    "auth/email-already-in-use":
+      "This email is already registered.",
+
+    "auth/weak-password":
+      "Password should be at least 6 characters.",
+
+    "auth/popup-closed-by-user":
+      "Google login cancelled.",
+
+    "auth/popup-blocked":
+      "Popup was blocked by browser."
+  };
+
+  return messages[code] ||
+    error?.message ||
+    "Something went wrong.";
+}
+
+
+/* ================= USER RECORD ================= */
+
+async function createUserRecord(
+  user,
+  extra={}
+){
+
+  const ref =
+    doc(
+      db,
+      "users",
+      user.uid
+    );
+
+  const snap =
+    await getDoc(ref);
+
+
+  if(!snap.exists()){
+
+    await setDoc(
+      ref,
+      {
+
+        uid:user.uid,
+
+        name:
+          extra.name ||
+          user.displayName ||
+          "",
+
+        email:
+          user.email ||
+          "",
+
+        phone:
+          extra.phone ||
+          "",
+
+        photoURL:
+          extra.photoURL ||
+          user.photoURL ||
+          "",
+
+        address:"",
+
+        profileSetupComplete:false,
+
+        createdAt:
+          serverTimestamp(),
+
+        updatedAt:
+          serverTimestamp()
+      }
+    );
+
+  }else{
+
+    await setDoc(
+      ref,
+      {
+
+        email:
+          user.email ||
+          snap.data().email ||
+          "",
+
+        updatedAt:
+          serverTimestamp()
+
+      },
+      {merge:true}
+    );
+  }
+}
+
+
+async function loadUserProfile(){
+
+  if(!currentUser){
+
+    currentProfile=null;
+
+    return null;
+  }
+
+  const ref =
+    doc(
+      db,
+      "users",
+      currentUser.uid
+    );
+
+  const snap =
+    await getDoc(ref);
+
+
+  if(snap.exists()){
+
+    currentProfile={
+      id:snap.id,
+      ...snap.data()
+    };
+
+  }else{
+
+    await createUserRecord(
+      currentUser
+    );
+
+    const newSnap =
+      await getDoc(ref);
+
+    currentProfile =
+      newSnap.exists()
+      ? {
+          id:newSnap.id,
+          ...newSnap.data()
+        }
+      : null;
+  }
+
+  return currentProfile;
+}
+
+
+/* ================= EMAIL LOGIN ================= */
+
+window.emailLogin = async function(){
+
+  const email =
+    document.getElementById("loginEmail")
+      .value.trim();
+
+  const password =
+    document.getElementById("loginPassword")
+      .value;
+
+
+  if(!email || !password){
+
+    toast("Email and password enter करें.");
+
+    return;
+  }
+
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    closeLogin();
+
+    toast("Login successful.");
+
+  }catch(error){
+
+    toast(getAuthError(error));
+  }
+};
+
+
+/* ================= SIGNUP ================= */
+
+window.emailSignup = async function(){
+
+  const name =
+    document.getElementById("signupName")
+      .value.trim();
+
+  const email =
+    document.getElementById("signupEmail")
+      .value.trim();
+
+  const password =
+    document.getElementById("signupPassword")
+      .value;
+
+
+  if(!name || !email || !password){
+
+    toast("All fields भरें.");
+
+    return;
+  }
+
+
+  if(password.length < 6){
+
+    toast(
+      "Password minimum 6 characters होना चाहिए."
+    );
+
+    return;
+  }
+
+
+  try{
+
+    const result =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+    await updateProfile(
+      result.user,
+      {displayName:name}
+    );
+
+
+    await createUserRecord(
+      result.user,
+      {name:name}
+    );
+
+
+    closeLogin();
+
+    await loadUserProfile();
+
+    showProfileSetup();
+
+    toast(
+      "Account created. Profile complete करें."
+    );
+
+  }catch(error){
+
+    toast(getAuthError(error));
+  }
+};
+
+
+/* ================= GOOGLE LOGIN ================= */
+
+window.googleLogin = async function(){
+
+  try{
+
+    const result =
+      await signInWithPopup(
+        auth,
+        googleProvider
+      );
+
+
+    await createUserRecord(
+      result.user
+    );
+
+    await loadUserProfile();
+
+    closeLogin();
+
+
+    if(profileSetupRequired()){
+
+      showProfileSetup();
+
+      toast(
+        "Please complete your profile."
+      );
+
+    }else{
+
+      showHome();
+
+      toast(
+        "Google login successful."
+      );
+    }
+
+  }catch(error){
+
+    toast(getAuthError(error));
+  }
+};
+
+
+/* ================= FORGOT PASSWORD ================= */
+
+window.forgotPassword = async function(){
+
+  const email =
+    document.getElementById("loginEmail")
+      .value.trim();
+
+
+  if(!email){
+
+    toast("पहले email enter करें.");
+
+    return;
+  }
+
+
+  try{
+
+    await sendPasswordResetEmail(
+      auth,
+      email
+    );
+
+    toast(
+      "Password reset email भेज दिया गया."
+    );
+
+  }catch(error){
+
+    toast(getAuthError(error));
+  }
+};
+
+
+/* ================= AUTH STATE ================= */
+
+onAuthStateChanged(
+  auth,
+  async user=>{
+
+    currentUser=user;
+
+
+    if(user){
+
+      try{
+
+        await createUserRecord(user);
+
+        await loadUserProfile();
+
+
+        if(profileSetupRequired()){
+
+          showProfileSetup();
+
+        }else{
+
+          renderProfile();
+        }
+
+
+        startOrdersRealtime();
+
+      }catch(error){
+
+        console.error(error);
+      }
+
+    }else{
+
+      currentProfile=null;
+
+      stopOrdersRealtime();
+
+      stopTrackingRealtime();
+
+      showHome();
+    }
+
+
+    updateCartCount();
+  }
+);
+
+
+/* ================= PROFILE SETUP ================= */
+
+function showProfileSetup(){
+
+  hidePages();
+
+  getPage("profileSetupPage")
+    .classList.add("active");
+
+
+  if(!currentUser) return;
+
+
+  const profile =
+    currentProfile || {};
+
+
+  document.getElementById("setupEmail").value =
+    currentUser.email ||
+    profile.email ||
+    "";
+
+
+  document.getElementById("setupName").value =
+    profile.name ||
+    currentUser.displayName ||
+    "";
+
+
+  document.getElementById("setupPhone").value =
+    profile.phone ||
+    "";
+
+
+  document.getElementById("setupPhoto").value =
+    profile.photoURL ||
+    currentUser.photoURL ||
+    "";
+
+
+  previewSetupPhoto();
+
+  window.scrollTo(0,0);
+}
+
+
+window.previewSetupPhoto = function(){
+
+  const url =
+    document.getElementById("setupPhoto")
+      .value.trim();
+
+  const preview =
+    document.getElementById(
+      "setupPhotoPreview"
+    );
+
+
+  preview.src =
+    url ||
+    "https://via.placeholder.com/105?text=Photo";
+
+
+  preview.onerror=function(){
+
+    this.src =
+      "https://via.placeholder.com/105?text=Photo";
+  };
+};
+
+
+window.saveProfileSetup =
+async function(){
+
+  if(!currentUser){
+
+    openLogin();
+
+    return;
+  }
+
+
+  const name =
+    document.getElementById("setupName")
+      .value.trim();
+
+  const phone =
+    document.getElementById("setupPhone")
+      .value.trim();
+
+  const photoURL =
+    document.getElementById("setupPhoto")
+      .value.trim();
+
+
+  if(!name){
+
+    toast("Name enter करें.");
+
+    return;
+  }
+
+
+  if(!phone){
+
+    toast("Mobile number enter करें.");
+
+    return;
+  }
+
+
+  try{
+
+    await setDoc(
+      doc(
+        db,
+        "users",
+        currentUser.uid
+      ),
+      {
+
+        uid:
+          currentUser.uid,
+
+        name:name,
+
+        phone:phone,
+
+        email:
+          currentUser.email || "",
+
+        photoURL:photoURL,
+
+        profileSetupComplete:true,
+
+        updatedAt:
+          serverTimestamp()
+
+      },
+      {merge:true}
+    );
+
+
+    await updateProfile(
+      currentUser,
+      {
+
+        displayName:name,
+
+        photoURL:
+          photoURL || null
+
+      }
+    );
+
+
+    await loadUserProfile();
+
+    toast("Profile saved successfully.");
+
+    showHome();
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Profile save नहीं हो सका: " +
+      (error.message || "Unknown error")
+    );
+  }
+};
+
+
+/* ================= PROFILE ================= */
+
+function renderProfile(){
+
+  if(!currentProfile) return;
+
+
+  const photo =
+    currentProfile.photoURL ||
+    currentUser?.photoURL ||
+    "https://via.placeholder.com/105?text=User";
+
+
+  document.getElementById("profilePhoto").src =
+    photo;
+
+
+  document.getElementById("profileName")
+    .textContent =
+      currentProfile.name ||
+      currentUser?.displayName ||
+      "User";
+
+
+  document.getElementById("profileEmail")
+    .textContent =
+      currentProfile.email ||
+      currentUser?.email ||
+      "";
+
+
+  document.getElementById("profileDetails")
+    .innerHTML = `
+
+      <div class="form-group">
+
+        <label>Mobile Number</label>
+
+        <input
+          class="readonly"
+          value="${escapeHTML(
+            currentProfile.phone || ""
+          )}"
+          readonly>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+          class="readonly"
+          value="${escapeHTML(
+            currentProfile.email ||
+            currentUser?.email ||
+            ""
+          )}"
+          readonly>
+
+      </div>
+
+    `;
+}
+
+
+window.editProfile=function(){
+
+  showProfileSetup();
+};
+
+
+/* ================= ESCAPE ================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* ================= LOGOUT ================= */
+
+window.logout=async function(){
+
+  try{
+
+    await signOut(auth);
+
+    stopOrdersRealtime();
+
+    stopTrackingRealtime();
+
+    toast("Logged out.");
+
+    showHome();
+
+  }catch(error){
+
+    toast(error.message);
+  }
+};
+
+
+/* ================= PRODUCTS ================= */
+
+async function loadProducts(){
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(
+          db,
+          "products"
+        )
+      );
+
+
+    products =
+      snap.docs.map(
+        productDoc=>({
+
+          id:productDoc.id,
+
+          ...productDoc.data()
+
+        })
+      );
+
+
+    renderProducts(products);
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "productGrid"
+    ).innerHTML = `
+
+      <div class="empty">
+        Products load नहीं हो सके.
+      </div>
+
+    `;
+  }
+}
+
+
+/* ================= PRODUCT CARD ================= */
+
+function renderProducts(list){
+
+  const grid =
+    document.getElementById(
+      "productGrid"
+    );
+
+
+  document.getElementById(
+    "productCount"
+  ).textContent =
+    `${list.length} products`;
+
+
+  if(!list.length){
+
+    grid.innerHTML = `
+
+      <div class="empty">
+        No products found.
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML =
+    list.map(product=>{
+
+      const image =
+        getFirstProductImage(product);
+
+
+      const price =
+        Number(product.price || 0);
+
+
+      const oldPrice =
+        Number(product.oldPrice || 0);
+
+
+      const sizes =
+        getProductSizes(product);
+
+
+      let meta="";
+
+
+      if(product.category){
+
+        meta += `
+
+          <div>
+            📂 ${escapeHTML(
+              product.category
+            )}
+          </div>
+
+        `;
+      }
+
+
+      if(product.ageGroup){
+
+        meta += `
+
+          <div>
+            👤 ${escapeHTML(
+              product.ageGroup
+            )}
+          </div>
+
+        `;
+      }
+
+
+      if(sizes.length){
+
+        meta += `
+
+          <div>
+            📏 ${escapeHTML(
+              sizes.join(", ")
+            )}
+          </div>
+
+        `;
+      }
+
+
+      if(product.freeDelivery === true){
+
+        meta += `
+
+          <div class="free-delivery">
+            🚚 Free Delivery
+          </div>
+
+        `;
+
+      }else if(
+        Number(product.deliveryCharge || 0)>0
+      ){
+
+        meta += `
+
+          <div class="delivery-charge">
+            🚚 Delivery:
+            ${money(product.deliveryCharge)}
+          </div>
+
+        `;
+      }
+
+
+      if(product.expectedDelivery){
+
+        meta += `
+
+          <div>
+            📅 ${formatDate(
+              product.expectedDelivery
+            )}
+          </div>
+
+        `;
+      }
+
+
+      return `
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="${escapeHTML(image)}"
+            onerror="
+              this.src='https://via.placeholder.com/500?text=Product'
+            "
+          >
+
+          <div class="product-info">
+
+            <div class="product-name">
+
+              ${escapeHTML(
+                product.name ||
+                "Product"
+              )}
+
+            </div>
+
+            <div class="price">
+
+              ${money(price)}
+
+              ${
+                oldPrice > price
+                ? `
+                  <span class="old-price">
+                    ${money(oldPrice)}
+                  </span>
+                `
+                : ""
+              }
+
+            </div>
+
+            ${
+              meta
+              ? `
+                <div class="product-meta">
+                  ${meta}
+                </div>
+              `
+              : ""
+            }
+
+            <button
+              onclick="openProduct('${escapeHTML(product.id)}')">
+
+              View Product
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+}
+
+
+/* ================= SEARCH ================= */
+
+window.searchProducts=function(){
+
+  const text =
+    document.getElementById(
+      "searchInput"
+    ).value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    products.filter(product=>{
+
+      const name =
+        String(
+          product.name || ""
+        ).toLowerCase();
+
+
+      const category =
+        String(
+          product.category || ""
+        ).toLowerCase();
+
+
+      const age =
+        String(
+          product.ageGroup || ""
+        ).toLowerCase();
+
+
+      const sizes =
+        getProductSizes(product)
+          .join(" ")
+          .toLowerCase();
+
+
+      return(
+        name.includes(text) ||
+        category.includes(text) ||
+        age.includes(text) ||
+        sizes.includes(text)
+      );
+
+    });
+
+
+  renderProducts(filtered);
+};
+
+
+/* ================= PRODUCT DETAIL ================= */
+
+window.openProduct=function(id){
+
+  const product =
+    products.find(
+      p=>p.id===id
+    );
+
+
+  if(!product) return;
+
+
+  hidePages();
+
+  getPage("productPage")
+    .classList.add("active");
+
+
+  const images =
+    getProductImages(product);
+
+
+  const safeImages =
+    images.length
+    ? images
+    : [
+        "https://via.placeholder.com/600?text=Product"
+      ];
+
+
+  const sizes =
+    getProductSizes(product);
+
+
+  const highlightData =
+    getProductHighlights(product);
+
+
+  const price =
+    Number(product.price || 0);
+
+
+  const oldPrice =
+    Number(product.oldPrice || 0);
+
+
+  let deliveryHTML="";
+
+
+  if(product.freeDelivery===true){
+
+    deliveryHTML=`
+      🚚 <b>Free Delivery</b>
+    `;
+
+  }else if(
+    Number(product.deliveryCharge || 0)>0
+  ){
+
+    deliveryHTML=`
+      🚚 <b>Delivery Charge:</b>
+      ${money(product.deliveryCharge)}
+    `;
+
+  }else{
+
+    deliveryHTML=`
+      🚚 Delivery information
+      will be shown at checkout.
+    `;
+  }
+
+
+  let expectedHTML="";
+
+
+  if(product.expectedDelivery){
+
+    expectedHTML=`
+
+      <div class="product-details-row">
+
+        <b>📅 Expected Delivery:</b>
+
+        <span>
+          ${formatDate(
+            product.expectedDelivery
+          )}
+        </span>
+
+      </div>
+
+    `;
+
+  }else{
+
+    expectedHTML=`
+
+      <div class="product-details-row">
+
+        <b>📅 Expected Delivery:</b>
+
+        <span>
+          ${getExpectedDeliveryText()}
+        </span>
+
+      </div>
+
+    `;
+  }
+
+
+  /*
+    New highlights:
+    Label | Value
+  */
+
+  let highlightsHTML="";
+
+
+  if(highlightData.length){
+
+    highlightsHTML=`
+
+      <div class="highlights">
+
+        <h3>
+          Product Highlights
+        </h3>
+
+        <div class="highlight-table">
+
+          ${highlightData.map(item=>`
+
+            <div class="highlight-row">
+
+              <div class="highlight-label">
+
+                ${escapeHTML(
+                  item.label || "Details"
+                )}
+
+              </div>
+
+              <div class="highlight-value">
+
+                ${escapeHTML(
+                  item.value || "-"
+                )}
+
+              </div>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+      </div>
+
+    `;
+
+  }else{
+
+    /*
+      Old products जिनमें highlights नहीं हैं
+    */
+
+    highlightsHTML=`
+
+      <div class="highlights">
+
+        <h3>
+          Product Highlights
+        </h3>
+
+        <ul class="highlight-old">
+
+          <li>Good quality product</li>
+          <li>Easy ordering</li>
+          <li>Cash on Delivery available</li>
+          <li>Order tracking available</li>
+
+        </ul>
+
+      </div>
+
+    `;
+  }
+
+
+  document.getElementById(
+    "productDetail"
+  ).innerHTML = `
+
+    <div class="detail-box">
+
+      <div class="detail-layout">
+
+        <!-- IMAGE GALLERY -->
+
+        <div>
+
+          <img
+            id="mainProductImage"
+            class="detail-image"
+            src="${escapeHTML(
+              safeImages[0]
+            )}"
+            onerror="
+              this.src='https://via.placeholder.com/600?text=Product'
+            "
+          >
+
+
+          ${
+            safeImages.length>1
+            ? `
+
+              <div class="image-gallery">
+
+                ${safeImages.map(
+                  (image,index)=>`
+
+                    <img
+                      class="gallery-thumb ${
+                        index===0
+                        ? "active"
+                        : ""
+                      }"
+                      src="${escapeHTML(image)}"
+                      onclick="changeProductImage(
+                        ${index},
+                        '${escapeHTML(product.id)}'
+                      )"
+                      onerror="
+                        this.style.display='none'
+                      "
+                    >
+
+                  `
+                ).join("")}
+
+              </div>
+
+              <div class="image-count">
+
+                ${safeImages.length}
+                product photos
+
+              </div>
+
+            `
+            : ""
+          }
+
+        </div>
+
+
+        <!-- PRODUCT INFORMATION -->
+
+        <div>
+
+          <div class="detail-name">
+
+            ${escapeHTML(
+              product.name ||
+              "Product"
+            )}
+
+          </div>
+
+
+          <div class="detail-price">
+
+            ${money(price)}
+
+            ${
+              oldPrice>price
+              ? `
+                <span class="old-price">
+                  ${money(oldPrice)}
+                </span>
+              `
+              : ""
+            }
+
+          </div>
+
+
+          <div class="delivery-box">
+
+            ${deliveryHTML}
+
+          </div>
+
+
+          <div style="
+            line-height:1.6;
+            white-space:pre-line;
+          ">
+
+            ${escapeHTML(
+              product.description ||
+              "No description available."
+            )}
+
+          </div>
+
+
+          <div class="product-details-box">
+
+            ${
+              product.category
+              ? `
+
+                <div class="product-details-row">
+
+                  <b>📂 Category:</b>
+
+                  ${escapeHTML(
+                    product.category
+                  )}
+
+                </div>
+
+              `
+              : ""
+            }
+
+
+            ${
+              product.ageGroup
+              ? `
+
+                <div class="product-details-row">
+
+                  <b>👤 Age Group:</b>
+
+                  ${escapeHTML(
+                    product.ageGroup
+                  )}
+
+                </div>
+
+              `
+              : ""
+            }
+
+
+            ${
+              sizes.length
+              ? `
+
+                <div class="product-details-row">
+
+                  <b>📏 Available Sizes:</b>
+
+                  <div class="size-list">
+
+                    ${sizes.map(size=>`
+
+                      <span class="size-tag">
+
+                        ${escapeHTML(size)}
+
+                      </span>
+
+                    `).join("")}
+
+                  </div>
+
+                </div>
+
+              `
+              : ""
+            }
+
+
+            <div class="product-details-row">
+
+              <b>🚚 Delivery:</b>
+
+              ${
+                product.freeDelivery===true
+                ? "Free Delivery"
+                : Number(
+                    product.deliveryCharge || 0
+                  )>0
+                ? money(
+                    product.deliveryCharge
+                  )
+                : "Standard Delivery"
+              }
+
+            </div>
+
+
+            ${expectedHTML}
+
+          </div>
+
+
+          ${highlightsHTML}
+
+
+          <button
+            class="big-btn"
+            onclick="addToCart('${escapeHTML(product.id)}')">
+
+            Add to Cart
+
+          </button>
+
+
+          <button
+            class="big-btn secondary-btn"
+            onclick="buyNow('${escapeHTML(product.id)}')">
+
+            Buy Now
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="section-title">
+
+        <h2>
+          You May Also Like
+        </h2>
+
+      </div>
+
+
+      <div
+        id="relatedProducts"
+        class="product-grid">
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  renderRelatedProducts(product);
+
+  window.scrollTo(0,0);
+};
+
+
+/* ================= CHANGE GALLERY IMAGE ================= */
+
+window.changeProductImage=function(
+  index,
+  productId
+){
+
+  const product =
+    products.find(
+      p=>p.id===productId
+    );
+
+
+  if(!product) return;
+
+
+  const images =
+    getProductImages(product);
+
+
+  if(!images[index]) return;
+
+
+  const main =
+    document.getElementById(
+      "mainProductImage"
+    );
+
+
+  if(main){
+
+    main.src=images[index];
+
+    main.onerror=function(){
+
+      this.src =
+        "https://via.placeholder.com/600?text=Product";
+    };
+  }
+
+
+  document.querySelectorAll(
+    ".gallery-thumb"
+  ).forEach((thumb,i)=>{
+
+    thumb.classList.toggle(
+      "active",
+      i===index
+    );
+
+  });
+};
+
+
+/* ================= RELATED PRODUCTS ================= */
+
+function renderRelatedProducts(
+  currentProduct
+){
+
+  const sameCategory =
+    products.filter(product=>
+
+      product.id!==currentProduct.id &&
+
+      product.category &&
+
+      currentProduct.category &&
+
+      product.category===
+      currentProduct.category
+    );
+
+
+  const others =
+    products.filter(product=>
+
+      product.id!==currentProduct.id &&
+
+      !sameCategory.some(
+        p=>p.id===product.id
+      )
+    );
+
+
+  const related =
+    [
+      ...sameCategory,
+      ...others
+    ].slice(0,4);
+
+
+  const box =
+    document.getElementById(
+      "relatedProducts"
+    );
+
+
+  if(!box) return;
+
+
+  if(!related.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No related products.
+      </div>`;
+
+    return;
+  }
+
+
+  box.innerHTML =
+    related.map(product=>{
+
+      const image =
+        getFirstProductImage(product);
+
+
+      return `
+
+        <div class="product-card">
+
+          <img
+            class="product-image"
+            src="${escapeHTML(image)}"
+            onerror="
+              this.src='https://via.placeholder.com/400?text=Product'
+            "
+          >
+
+          <div class="product-info">
+
+            <div class="product-name">
+
+              ${escapeHTML(
+                product.name ||
+                "Product"
+              )}
+
+            </div>
+
+            <div class="price">
+
+              ${money(
+                product.price
+              )}
+
+            </div>
+
+            <button
+              onclick="openProduct('${escapeHTML(product.id)}')">
+
+              View Product
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+}
+
+
+/* ================= CART ================= */
+
+function buildCartProduct(product){
+
+  return {
+
+    id:product.id,
+
+    name:product.name,
+
+    price:Number(
+      product.price || 0
+    ),
+
+    image:getFirstProductImage(product),
+
+    images:getProductImages(product),
+
+    qty:1,
+
+    category:
+      product.category || "",
+
+    ageGroup:
+      product.ageGroup || "",
+
+    sizes:
+      getProductSizes(product),
+
+    highlights:
+      getProductHighlights(product),
+
+    deliveryCharge:
+      getProductDeliveryCharge(product),
+
+    freeDelivery:
+      product.freeDelivery===true,
+
+    expectedDelivery:
+      product.expectedDelivery || ""
+  };
+}
+
+
+window.addToCart=function(id){
+
+  const product =
+    products.find(
+      p=>p.id===id
+    );
+
+
+  if(!product) return;
+
+
+  const existing =
+    cart.find(
+      item=>item.id===id
+    );
+
+
+  if(existing){
+
+    existing.qty += 1;
+
+    existing.price =
+      Number(product.price || 0);
+
+    existing.image =
+      getFirstProductImage(product);
+
+    existing.images =
+      getProductImages(product);
+
+    existing.sizes =
+      getProductSizes(product);
+
+    existing.highlights =
+      getProductHighlights(product);
+
+    existing.deliveryCharge =
+      getProductDeliveryCharge(product);
+
+    existing.freeDelivery =
+      product.freeDelivery===true;
+
+    existing.expectedDelivery =
+      product.expectedDelivery || "";
+
+  }else{
+
+    cart.push(
+      buildCartProduct(product)
+    );
+  }
+
+
+  saveCart();
+
+  toast(
+    "Product added to cart."
+  );
+};
+
+
+window.buyNow=function(id){
+
+  const product =
+    products.find(
+      p=>p.id===id
+    );
+
+
+  if(!product) return;
+
+
+  const existing =
+    cart.find(
+      item=>item.id===id
+    );
+
+
+  if(existing){
+
+    existing.qty += 1;
+
+  }else{
+
+    cart.push(
+      buildCartProduct(product)
+    );
+  }
+
+
+  saveCart();
+
+  showCart();
+};
+
+
+function renderCart(){
+
+  const box =
+    document.getElementById(
+      "cartContent"
+    );
+
+
+  if(!cart.length){
+
+    box.innerHTML = `
+
+      <div class="cart-box empty">
+        Your cart is empty.
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  let subtotal=0;
+
+
+  const html =
+    cart.map(
+      (item,index)=>{
+
+        const itemTotal =
+          Number(item.price) *
+          Number(item.qty);
+
+
+        subtotal += itemTotal;
+
+
+        return `
+
+          <div class="cart-item">
+
+            <img
+              src="${escapeHTML(
+                item.image ||
+                "https://via.placeholder.com/100?text=Product"
+              )}"
+              onerror="
+                this.src='https://via.placeholder.com/100?text=Product'
+              "
+            >
+
+            <div class="cart-item-info">
+
+              <b>
+                ${escapeHTML(
+                  item.name
+                )}
+              </b>
+
+              <div>
+                ${money(item.price)}
+              </div>
+
+              ${
+                item.category
+                ? `
+                  <small>
+                    ${escapeHTML(
+                      item.category
+                    )}
+                  </small>
+                `
+                : ""
+              }
+
+              <div class="qty">
+
+                <button
+                  onclick="changeQty(${index},-1)">
+                  −
+                </button>
+
+                <span>
+                  ${item.qty}
+                </span>
+
+                <button
+                  onclick="changeQty(${index},1)">
+                  +
+                </button>
+
+                <button
+                  onclick="removeCart(${index})"
+                  style="margin-left:8px;">
+                  🗑
+                </button>
+
+              </div>
+
+            </div>
+
+            <b>
+              ${money(itemTotal)}
+            </b>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+
+  const delivery =
+    getCartDeliveryTotal();
+
+
+  const total =
+    subtotal+delivery;
+
+
+  box.innerHTML = `
+
+    <div class="cart-box">
+
+      ${html}
+
+      <hr style="
+        margin:15px 0;
+        border:0;
+        border-top:1px solid #eee;
+      ">
+
+      <p style="margin-bottom:7px;">
+
+        <b>Subtotal:</b>
+
+        ${money(subtotal)}
+
+      </p>
+
+      <p style="margin-bottom:7px;">
+
+        <b>Delivery:</b>
+
+        ${
+          delivery>0
+          ? money(delivery)
+          : "Free"
+        }
+
+      </p>
+
+      <h3>
+        Total: ${money(total)}
+      </h3>
+
+      <button
+        class="big-btn"
+        onclick="openCheckout()">
+
+        Proceed to Checkout
+
+      </button>
+
+    </div>
+
+  `;
+}
+
+
+window.changeQty=function(index,value){
+
+  if(!cart[index]) return;
+
+
+  cart[index].qty += value;
+
+
+  if(cart[index].qty<=0){
+
+    cart.splice(index,1);
+  }
+
+
+  saveCart();
+
+  renderCart();
+};
+
+
+window.removeCart=function(index){
+
+  cart.splice(index,1);
+
+  saveCart();
+
+  renderCart();
+
+  toast("Product removed.");
+};
+
+
+/* ================= CHECKOUT ================= */
+
+window.openCheckout=function(){
+
+  if(!requireLogin()) return;
+
+
+  if(profileSetupRequired()){
+
+    showProfileSetup();
+
+    return;
+  }
+
+
+  if(!cart.length){
+
+    toast("Cart is empty.");
+
+    return;
+  }
+
+
+  hidePages();
+
+  getPage("checkoutPage")
+    .classList.add("active");
+
+
+  const profile =
+    currentProfile || {};
+
+
+  document.getElementById(
+    "checkoutName"
+  ).value =
+    profile.name || "";
+
+
+  document.getElementById(
+    "checkoutPhone"
+  ).value =
+    profile.phone || "";
+
+
+  document.getElementById(
+    "checkoutAddress"
+  ).value =
+    profile.address || "";
+
+
+  const subtotal =
+    getCartSubtotal();
+
+
+  const delivery =
+    getCartDeliveryTotal();
+
+
+  const total =
+    subtotal+delivery;
+
+
+  const deliveryTexts =
+    cart.map(item=>{
+
+      const charge =
+        Number(
+          item.deliveryCharge || 0
+        );
+
+
+      if(
+        item.freeDelivery===true ||
+        charge===0
+      ){
+
+        return "Free Delivery";
+      }
+
+      return money(charge);
+    });
+
+
+  const uniqueDeliveryText =
+    [...new Set(deliveryTexts)]
+      .join(", ");
+
+
+  document.getElementById(
+    "checkoutSummary"
+  ).innerHTML = `
+
+    <div class="order-summary-box">
+
+      <p>
+        <b>Subtotal:</b>
+        ${money(subtotal)}
+      </p>
+
+      <p style="margin-top:7px;">
+
+        <b>Delivery:</b>
+
+        ${
+          delivery>0
+          ? money(delivery)
+          : "Free"
+        }
+
+      </p>
+
+      <div class="delivery-box">
+
+        🚚 <b>Delivery</b><br>
+
+        ${escapeHTML(
+          uniqueDeliveryText
+        )}
+
+      </div>
+
+      <p style="margin-top:10px;">
+
+        <b>Expected Delivery:</b>
+
+        ${
+          cart.length===1 &&
+          cart[0].expectedDelivery
+          ? formatDate(
+              cart[0].expectedDelivery
+            )
+          : getExpectedDeliveryText()
+        }
+
+      </p>
+
+      <h3 style="margin-top:12px;">
+
+        Order Total:
+        ${money(total)}
+
+      </h3>
+
+    </div>
+
+  `;
+
+
+  window.scrollTo(0,0);
+};
+
+
+/* ================= PLACE ORDER ================= */
+
+window.placeOrder=async function(){
+
+  if(!currentUser){
+
+    openLogin();
+
+    return;
+  }
+
+
+  if(!cart.length){
+
+    toast("Cart is empty.");
+
+    return;
+  }
+
+
+  const name =
+    document.getElementById(
+      "checkoutName"
+    ).value.trim();
+
+
+  const phone =
+    document.getElementById(
+      "checkoutPhone"
+    ).value.trim();
+
+
+  const address =
+    document.getElementById(
+      "checkoutAddress"
+    ).value.trim();
+
+
+  const payment =
+    document.getElementById(
+      "paymentMethod"
+    ).value;
+
+
+  if(!name || !phone || !address){
+
+    toast(
+      "Delivery details complete करें."
+    );
+
+    return;
+  }
+
+
+  const subtotal =
+    getCartSubtotal();
+
+
+  const deliveryCharge =
+    getCartDeliveryTotal();
+
+
+  const total =
+    subtotal+deliveryCharge;
+
+
+  let expectedDelivery="";
+
+
+  if(
+    cart.length===1 &&
+    cart[0].expectedDelivery
+  ){
+
+    expectedDelivery =
+      formatDate(
+        cart[0].expectedDelivery
+      );
+
+  }else{
+
+    expectedDelivery =
+      getExpectedDeliveryText();
+  }
+
+
+  try{
+
+    const orderItems =
+      cart.map(item=>({
+
+        id:item.id,
+
+        name:item.name,
+
+        price:Number(
+          item.price || 0
+        ),
+
+        qty:Number(
+          item.qty || 1
+        ),
+
+        image:item.image || "",
+
+        images:
+          Array.isArray(item.images)
+          ? item.images.slice(0,6)
+          : [],
+
+        category:
+          item.category || "",
+
+        ageGroup:
+          item.ageGroup || "",
+
+        sizes:
+          getProductSizes(item),
+
+        highlights:
+          getProductHighlights(item),
+
+        deliveryCharge:
+          Number(
+            item.deliveryCharge || 0
+          ),
+
+        freeDelivery:
+          item.freeDelivery===true
+
+      }));
+
+
+    const orderData={
+
+      userId:
+        currentUser.uid,
+
+      customerId:
+        currentUser.uid,
+
+      customerName:name,
+
+      customerEmail:
+        currentUser.email || "",
+
+      customerPhone:phone,
+
+      address:address,
+
+      paymentMethod:payment,
+
+      items:orderItems,
+
+      subtotal:subtotal,
+
+      deliveryCharge:deliveryCharge,
+
+      total:total,
+
+      status:"Pending",
+
+      statusStep:0,
+
+      progress:0,
+
+      orderProgress:0,
+
+      currentLocation:
+        "Order received",
+
+      deliveryLocation:
+        "Order received",
+
+      expectedDeliveryDate:
+        expectedDelivery,
+
+      expectedDelivery:
+        expectedDelivery,
+
+      createdAt:
+        serverTimestamp(),
+
+      updatedAt:
+        serverTimestamp()
+    };
+
+
+    const orderRef =
+      await addDoc(
+        collection(
+          db,
+          "orders"
+        ),
+        orderData
+      );
+
+
+    await setDoc(
+      doc(
+        db,
+        "users",
+        currentUser.uid
+      ),
+      {
+
+        address:address,
+
+        updatedAt:
+          serverTimestamp()
+
+      },
+      {merge:true}
+    );
+
+
+    await addDoc(
+      collection(
+        db,
+        "notifications"
+      ),
+      {
+
+        userId:
+          currentUser.uid,
+
+        title:
+          "Order Placed",
+
+        message:
+          `Your order ${orderRef.id} has been placed successfully.`,
+
+        orderId:
+          orderRef.id,
+
+        read:false,
+
+        createdAt:
+          serverTimestamp()
+      }
+    );
+
+
+    cart=[];
+
+    saveCart();
+
+    toast(
+      "Order placed successfully."
+    );
+
+
+    await loadUserProfile();
+
+    showOrders();
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Order place नहीं हुआ: " +
+      error.message
+    );
+  }
+};
+
+
+/* ================= ORDERS REALTIME ================= */
+
+function startOrdersRealtime(){
+
+  stopOrdersRealtime();
+
+
+  if(!currentUser) return;
+
+
+  const q =
+    query(
+      collection(
+        db,
+        "orders"
+      ),
+      where(
+        "userId",
+        "==",
+        currentUser.uid
+      )
+    );
+
+
+  unsubscribeOrders =
+    onSnapshot(
+      q,
+      snapshot=>{
+
+        let orders =
+          snapshot.docs.map(
+            orderDoc=>({
+
+              id:orderDoc.id,
+
+              ...orderDoc.data()
+
+            })
+          );
+
+
+        orders.sort(
+          (a,b)=>{
+
+            const aDate =
+              a.createdAt?.toMillis
+              ? a.createdAt.toMillis()
+              : 0;
+
+
+            const bDate =
+              b.createdAt?.toMillis
+              ? b.createdAt.toMillis()
+              : 0;
+
+
+            return bDate-aDate;
+          }
+        );
+
+
+        const ordersPage =
+          document.getElementById(
+            "ordersPage"
+          );
+
+
+        if(
+          ordersPage.classList.contains(
+            "active"
+          )
+        ){
+
+          renderOrders(orders);
+        }
+
+
+        if(trackingOrderId){
+
+          const tracked =
+            orders.find(
+              order=>
+                order.id===trackingOrderId
+            );
+
+
+          if(tracked){
+
+            renderTrackingOrder(
+              tracked
+            );
+          }
+        }
+
+      },
+      error=>{
+
+        console.error(
+          "Orders realtime error:",
+          error
+        );
+
+      }
+    );
+}
+
+
+function stopOrdersRealtime(){
+
+  if(unsubscribeOrders){
+
+    unsubscribeOrders();
+
+    unsubscribeOrders=null;
+  }
+}
+
+
+/* ================= LOAD ORDERS ================= */
+
+async function loadOrders(){
+
+  const box =
+    document.getElementById(
+      "ordersContent"
+    );
+
+
+  box.innerHTML =
+    `<div class="empty">
+      Loading orders...
+    </div>`;
+
+
+  if(!currentUser){
+
+    box.innerHTML =
+      `<div class="empty">
+        Please login.
+      </div>`;
+
+    return;
+  }
+
+
+  try{
+
+    const q =
+      query(
+        collection(
+          db,
+          "orders"
+        ),
+        where(
+          "userId",
+          "==",
+          currentUser.uid
+        )
+      );
+
+
+    const snap =
+      await getDocs(q);
+
+
+    let orders =
+      snap.docs.map(
+        orderDoc=>({
+
+          id:orderDoc.id,
+
+          ...orderDoc.data()
+
+        })
+      );
+
+
+    orders.sort(
+      (a,b)=>{
+
+        const aDate =
+          a.createdAt?.toMillis
+          ? a.createdAt.toMillis()
+          : 0;
+
+
+        const bDate =
+          b.createdAt?.toMillis
+          ? b.createdAt.toMillis()
+          : 0;
+
+
+        return bDate-aDate;
+      }
+    );
+
+
+    renderOrders(orders);
+
+  }catch(error){
+
+    console.error(error);
+
+    box.innerHTML = `
+
+      <div class="empty">
+        Orders load नहीं हो सके.
+      </div>
+
+    `;
+  }
+}
+
+
+/* ================= RENDER ORDERS ================= */
+
+function renderOrders(orders){
+
+  const box =
+    document.getElementById(
+      "ordersContent"
+    );
+
+
+  if(!orders.length){
+
+    box.innerHTML = `
+
+      <div class="empty">
+        You have no orders yet.
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  box.innerHTML =
+    orders.map(
+      order=>
+        renderOrderCard(order)
+    ).join("");
+}
+
+
+/* ================= ORDER CARD ================= */
+
+function renderOrderCard(order){
+
+  const items =
+    Array.isArray(order.items)
+    ? order.items
+    : [];
+
+
+  const step =
+    getOrderStep(order);
+
+
+  const progress =
+    getOrderProgress(order);
+
+
+  const itemText =
+    items.map(
+      item=>
+        `${item.name || "Product"} × ${item.qty || 1}`
+    ).join(", ");
+
+
+  return `
+
+    <div class="order-card">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        gap:10px;
+        flex-wrap:wrap;
+      ">
+
+        <div>
+
+          <b>Order ID</b>
+
+          <br>
+
+          <span style="
+            word-break:break-all;
+          ">
+
+            ${escapeHTML(order.id)}
+
+          </span>
+
+        </div>
+
+        <span class="status">
+
+          ${escapeHTML(
+            order.status || "Pending"
+          )}
+
+        </span>
+
+      </div>
+
+
+      <p style="margin-top:10px;">
+
+        ${escapeHTML(
+          itemText || "Product"
+        )}
+
+      </p>
+
+
+      <div class="order-summary-box">
+
+        <p>
+          <b>Subtotal:</b>
+          ${money(
+            order.subtotal ??
+            order.total
+          )}
+        </p>
+
+        <p style="margin-top:7px;">
+
+          <b>Delivery:</b>
+
+          ${
+            Number(
+              order.deliveryCharge || 0
+            )>0
+            ? money(order.deliveryCharge)
+            : "Free"
+          }
+
+        </p>
+
+        <p style="margin-top:7px;">
+
+          <b>Total:</b>
+          ${money(order.total)}
+
+        </p>
+
+        <p style="margin-top:7px;">
+
+          <b>Expected Delivery:</b>
+
+          ${escapeHTML(
+            order.expectedDeliveryDate ||
+            order.expectedDelivery ||
+            "Not available"
+          )}
+
+        </p>
+
+      </div>
+
+
+      <div class="progress-wrap">
+
+        <b>Order Progress</b>
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            style="width:${progress}%">
+          </div>
+
+        </div>
+
+        <div class="progress-number">
+
+          ${Math.round(progress)}%
+
+        </div>
+
+      </div>
+
+
+      <div class="location-box">
+
+        📍 <b>Current Location</b>
+
+        <div style="margin-top:5px;">
+
+          ${escapeHTML(
+            order.currentLocation ||
+            order.deliveryLocation ||
+            "Location not updated yet"
+          )}
+
+        </div>
+
+      </div>
+
+
+      <div class="live-update">
+        ● Live order status
+      </div>
+
+
+      <button
+        class="big-btn"
+        onclick="trackOrder('${escapeHTML(order.id)}')">
+
+        Track Full Order
+
+      </button>
+
+    </div>
+
+  `;
+}
+
+
+/* ================= TRACK ORDER ================= */
+
+window.trackOrder=async function(orderId){
+
+  if(!requireLogin()) return;
+
+
+  hidePages();
+
+  getPage("trackPage")
+    .classList.add("active");
+
+
+  trackingOrderId=orderId;
+
+
+  const box =
+    document.getElementById(
+      "trackContent"
+    );
+
+
+  box.innerHTML =
+    `<div class="empty">
+      Loading...
+    </div>`;
+
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(
+          db,
+          "orders",
+          orderId
+        )
+      );
+
+
+    if(!snap.exists()){
+
+      box.innerHTML =
+        `<div class="empty">
+          Order not found.
+        </div>`;
+
+      return;
+    }
+
+
+    const order={
+
+      id:snap.id,
+
+      ...snap.data()
+
+    };
+
+
+    if(
+      order.userId !==
+      currentUser.uid
+    ){
+
+      box.innerHTML =
+        `<div class="empty">
+          This order does not belong to your account.
+        </div>`;
+
+      return;
+    }
+
+
+    renderTrackingOrder(order);
+
+    startTrackingRealtime(orderId);
+
+    window.scrollTo(0,0);
+
+  }catch(error){
+
+    console.error(error);
+
+    box.innerHTML = `
+
+      <div class="empty">
+        Order tracking load नहीं हो सका.
+      </div>
+
+    `;
+  }
+};
+
+
+/* ================= TRACKING REALTIME ================= */
+
+function startTrackingRealtime(orderId){
+
+  stopTrackingRealtime();
+
+
+  if(!currentUser) return;
+
+
+  trackingOrderId=orderId;
+
+
+  const orderRef =
+    doc(
+      db,
+      "orders",
+      orderId
+    );
+
+
+  unsubscribeTrackingOrder =
+    onSnapshot(
+      orderRef,
+      snapshot=>{
+
+        if(!snapshot.exists()) return;
+
+
+        const order={
+
+          id:snapshot.id,
+
+          ...snapshot.data()
+
+        };
+
+
+        if(
+          order.userId !==
+          currentUser.uid
+        ){
+
+          return;
+        }
+
+
+        renderTrackingOrder(order);
+
+      },
+      error=>{
+
+        console.error(
+          "Tracking realtime error:",
+          error
+        );
+
+      }
+    );
+}
+
+
+function stopTrackingRealtime(){
+
+  if(unsubscribeTrackingOrder){
+
+    unsubscribeTrackingOrder();
+
+    unsubscribeTrackingOrder=null;
+  }
+
+  trackingOrderId=null;
+}
+
+
+/* ================= RENDER TRACKING ================= */
+
+function renderTrackingOrder(order){
+
+  const box =
+    document.getElementById(
+      "trackContent"
+    );
+
+
+  if(!box) return;
+
+
+  const currentStep =
+    getOrderStep(order);
+
+
+  const progress =
+    getOrderProgress(order);
+
+
+  const items =
+    Array.isArray(order.items)
+    ? order.items
+    : [];
+
+
+  const itemRows =
+    items.length
+
+    ? items.map(item=>`
+
+        <div class="order-item-row">
+
+          <div>
+
+            <b>
+              ${escapeHTML(
+                item.name ||
+                "Product"
+              )}
+            </b>
+
+            <div style="
+              color:#777;
+              font-size:12px;
+              margin-top:3px;
+            ">
+
+              Qty:
+              ${escapeHTML(
+                item.qty || 1
+              )}
+
+            </div>
+
+          </div>
+
+          <b>
+
+            ${money(
+              Number(item.price || 0) *
+              Number(item.qty || 1)
+            )}
+
+          </b>
+
+        </div>
+
+      `).join("")
+
+    : `
+      <div>
+        Product information not available.
+      </div>
+    `;
+
+
+  const location =
+    order.currentLocation ||
+    order.deliveryLocation ||
+    "Location not updated yet";
+
+
+  const expected =
+    order.expectedDeliveryDate ||
+    order.expectedDelivery ||
+    "Not available";
+
+
+  box.innerHTML = `
+
+    <div class="track-box">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:10px;
+        flex-wrap:wrap;
+      ">
+
+        <h2>
+          Track Order
+        </h2>
+
+        <span class="status">
+
+          ${escapeHTML(
+            order.status ||
+            "Pending"
+          )}
+
+        </span>
+
+      </div>
+
+
+      <p style="
+        margin-top:10px;
+        word-break:break-all;
+      ">
+
+        <b>Order ID:</b>
+
+        ${escapeHTML(order.id)}
+
+      </p>
+
+
+      <p style="margin-top:8px;">
+
+        <b>Order Date:</b>
+
+        ${formatDate(
+          order.createdAt
+        )}
+
+      </p>
+
+
+      <p style="margin-top:8px;">
+
+        <b>Expected Delivery:</b>
+
+        ${escapeHTML(expected)}
+
+      </p>
+
+
+      <div class="progress">
+
+        ${ORDER_STEPS.map(
+          (step,index)=>`
+
+            <div class="step ${
+              index<=currentStep
+              ? "active"
+              : ""
+            }">
+
+              <div class="step-circle">
+
+                ${
+                  index<=currentStep
+                  ? "✓"
+                  : ""
+                }
+
+              </div>
+
+              <div>
+                ${step}
+              </div>
+
+            </div>
+
+          `
+        ).join("")}
+
+      </div>
+
+
+      <div class="location-box">
+
+        📍 <b>
+          Current Delivery Location
+        </b>
+
+        <div style="
+          margin-top:6px;
+          font-size:15px;
+        ">
+
+          ${escapeHTML(location)}
+
+        </div>
+
+        <div class="live-update">
+          ● Live updated
+        </div>
+
+      </div>
+
+
+      <div class="progress-wrap">
+
+        <b>Delivery Progress</b>
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            style="width:${progress}%">
+          </div>
+
+        </div>
+
+        <div class="progress-number">
+
+          ${Math.round(progress)}% Complete
+
+        </div>
+
+      </div>
+
+
+      <div class="order-summary-box">
+
+        <h3 style="margin-bottom:8px;">
+          Ordered Products
+        </h3>
+
+        ${itemRows}
+
+      </div>
+
+
+      <div class="order-summary-box">
+
+        <p>
+
+          <b>Payment:</b>
+
+          ${escapeHTML(
+            order.paymentMethod ||
+            "COD"
+          )}
+
+        </p>
+
+        <p style="margin-top:7px;">
+
+          <b>Subtotal:</b>
+
+          ${money(
+            order.subtotal ??
+            order.total
+          )}
+
+        </p>
+
+        <p style="margin-top:7px;">
+
+          <b>Delivery:</b>
+
+          ${
+            Number(
+              order.deliveryCharge || 0
+            )>0
+            ? money(
+                order.deliveryCharge
+              )
+            : "Free"
+          }
+
+        </p>
+
+        <p style="
+          margin-top:10px;
+          font-size:18px;
+        ">
+
+          <b>Total:</b>
+
+          ${money(order.total)}
+
+        </p>
+
+      </div>
+
+
+      <div class="order-summary-box">
+
+        <h3>
+          Delivery Address
+        </h3>
+
+        <p style="
+          margin-top:7px;
+          line-height:1.5;
+        ">
+
+          ${escapeHTML(
+            order.address ||
+            "Address not available"
+          )}
+
+        </p>
+
+      </div>
+
+
+      <div style="
+        margin-top:15px;
+        padding:10px;
+        background:#f0fff5;
+        color:#168b45;
+        border-radius:8px;
+        font-size:13px;
+      ">
+
+        ✓ Order tracking automatically
+        updates when the seller changes
+        the order status or location.
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+/* ================= NOTIFICATIONS ================= */
+
+async function loadNotifications(){
+
+  const box =
+    document.getElementById(
+      "notificationsContent"
+    );
+
+
+  box.innerHTML =
+    `<div class="empty">
+      Loading...
+    </div>`;
+
+
+  try{
+
+    const q =
+      query(
+        collection(
+          db,
+          "notifications"
+        ),
+        where(
+          "userId",
+          "==",
+          currentUser.uid
+        )
+      );
+
+
+    const snap =
+      await getDocs(q);
+
+
+    let list =
+      snap.docs.map(
+        notificationDoc=>({
+
+          id:
+            notificationDoc.id,
+
+          ...notificationDoc.data()
+
+        })
+      );
+
+
+    list.sort(
+      (a,b)=>{
+
+        const aDate =
+          a.createdAt?.toMillis
+          ? a.createdAt.toMillis()
+          : 0;
+
+
+        const bDate =
+          b.createdAt?.toMillis
+          ? b.createdAt.toMillis()
+          : 0;
+
+
+        return bDate-aDate;
+      }
+    );
+
+
+    if(!list.length){
+
+      box.innerHTML = `
+
+        <div class="notification-box empty">
+
+          No notifications.
+
+        </div>
+
+      `;
+
+      return;
+    }
+
+
+    box.innerHTML =
+      list.map(
+        item=>`
+
+          <div
+            class="notification-box"
+            style="margin-bottom:12px;">
+
+            <h3>
+
+              ${escapeHTML(
+                item.title ||
+                "Notification"
+              )}
+
+            </h3>
+
+            <p style="
+              margin-top:7px;
+            ">
+
+              ${escapeHTML(
+                item.message || ""
+              )}
+
+            </p>
+
+            <small style="
+              display:block;
+              margin-top:7px;
+              color:#888;
+            ">
+
+              ${formatDate(
+                item.createdAt
+              )}
+
+            </small>
+
+          </div>
+
+        `
+      ).join("");
+
+  }catch(error){
+
+    console.error(error);
+
+    box.innerHTML = `
+
+      <div class="empty">
+
+        Notifications load नहीं हो सके.
+
+      </div>
+
+    `;
+  }
+}
+
+
+/* ================= START ================= */
+
+updateCartCount();
+
+loadProducts();
+
+</script>
+
+</body>
+</html>
